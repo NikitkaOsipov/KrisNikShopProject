@@ -2,7 +2,17 @@
 {
     public class CsvManager
     {
-        const string FILE_NAME = "C:\\Users\\osipo\\BlazorProjects\\KrisNikShopProject\\KrisNikShopProject\\Components\\Data\\FileCsv.csv";
+
+        // TODO fix hardcoded file path
+        // const string FILE_NAME = "C:\\Users\\osipo\\BlazorProjects\\KrisNikShopProject\\KrisNikShopProject\\Components\\Data\\FileCsv.csv";
+
+        // Get the path of the current directory
+        
+        // copilot example
+        string currentDirectory = Directory.GetCurrentDirectory();
+
+        // Construct the path to the file
+         const string FILE_NAME = Path.Combine(currentDirectory, "FileCsv.txt");
 
         public static Person[] getFromFile()
         {
