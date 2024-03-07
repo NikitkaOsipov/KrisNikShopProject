@@ -1,18 +1,27 @@
-﻿namespace KrisNikShopProject.Components
+﻿namespace KrisNikShopProject.Components.Data
 {
     public class CsvManager
     {
 
         // TODO fix hardcoded file path
-        // const string FILE_NAME = "C:\\Users\\osipo\\BlazorProjects\\KrisNikShopProject\\KrisNikShopProject\\Components\\Data\\FileCsv.csv";
+        // const string FILE_NAME = "C:\Users\osipo\BlazorProjects\KrisNikShopProject\KrisNikShopProject\Components\Data\FileCsv.csv";
 
         // Get the path of the current directory
-        
-        // copilot example
-        string currentDirectory = Directory.GetCurrentDirectory();
 
-        // Construct the path to the file
-         const string FILE_NAME = Path.Combine(currentDirectory, "FileCsv.txt");
+        // copilot example
+        //string currentDirectory = Directory.GetCurrentDirectory();
+
+        //// Construct the path to the file
+        //const string FILE_NAME = Path.Combine(currentDirectory, "FileCsv.txt");
+
+        static string currentDirectory;
+        static string FILE_NAME;
+
+        static CsvManager()
+        {
+            currentDirectory = Directory.GetCurrentDirectory();
+            FILE_NAME = Path.Combine(currentDirectory, Path.Combine("Components", "Data", "FileCsv.csv"));
+        }
 
         public static Person[] getFromFile()
         {
@@ -25,7 +34,7 @@
                     string[] line = reader.ReadLine().Split(",");
                     persons[i] = new Person
                     {
-                        Id = int.Parse(line[0]),
+                        Id = line[0],
                         Name = line[1],
                         Gender = line[2],
                         Country = line[3]
