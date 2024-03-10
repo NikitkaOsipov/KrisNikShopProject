@@ -1,0 +1,35 @@
+﻿@page "/regist"
+@rendermode InteractiveServer
+@inject UserRegistrationService UserRegistrationService
+
+<h3>UserRegistration</h3>
+
+
+<form @onsubmit="HandleSubmit">
+	<div class="form-group">
+		<label for="name"><b>Name</b></label>
+		<input type="text" id="name" @bind="UserModel.Name" required />
+	</div>
+
+	<div class="form-group">
+		<label for="email"><b>Email</b></label>
+		<input type="email" id="email" @bind="UserModel.Email" required />
+	</div>
+
+	<button type="submit" class="registerbtn">Register</button>
+</form>
+
+<div class="container signin">
+	<p>Already have an account? <a href="#">Sign in</a>.</p>
+</div>
+
+<p>@UserRegistrationService.GetCurrentUser()</p>
+
+@code {
+	private UserModel UserModel = new UserModel();
+
+	private void HandleSubmit()
+	{
+		UserRegistrationService.RegisterUser(UserModel);
+	}
+}

@@ -1,8 +1,9 @@
 ﻿@page "/"
-
+@inject UserRegistrationService UserRegistrationService
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
+<h3>@UserRegistrationService.GetCurrentUser()</h3>
 
 <ul>
     @foreach (var person in people)
