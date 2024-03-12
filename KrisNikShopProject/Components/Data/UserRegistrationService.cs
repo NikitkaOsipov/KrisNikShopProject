@@ -9,10 +9,15 @@
             currentUser = user;
         }
 
-        public string GetCurrentUser()
+        public string GetCurrentUserString()
         {
             string result = (currentUser?.Name ?? "Guest") + " " + (currentUser?.Email ?? "unknownEmail") + "!!!!";
 			return result;
 		}
+
+        public string GetUsersFromCsv()
+        {
+            return "User1,User2,User3";
+        }
     }
 }

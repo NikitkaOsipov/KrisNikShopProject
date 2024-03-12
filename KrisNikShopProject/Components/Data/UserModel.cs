@@ -13,7 +13,7 @@ namespace KrisNikShopProject.Components.Data
         {
 		}
 
-		public UserModel(string id, string name, string password, string email, string phoneNumber, string address, string country, string role)
+		public UserModel(string id, string name, string password, string email, string role)
         {
             Id = id;
             Name = name;
