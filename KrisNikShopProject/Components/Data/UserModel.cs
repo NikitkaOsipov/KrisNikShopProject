@@ -3,17 +3,17 @@ namespace KrisNikShopProject.Components.Data
 {
     public class UserModel
     {
-        public string? Id { get; set; }
+        public int? Id { get; set; }
         public string? Name { get; set; }
 		public string? Password { get; set; }
 		public string? Email { get; set; }
-		public string? Role { get; set; }
 
-        public UserModel()
+        public string? Role { get; set; } = "User";
+		public UserModel()
         {
 		}
 
-		public UserModel(string id, string name, string password, string email, string role)
+		public UserModel(int id, string name, string password, string email, string role)
         {
             Id = id;
             Name = name;
@@ -21,5 +21,10 @@ namespace KrisNikShopProject.Components.Data
             Email = email;
             Role = role;
         }
+
+        public override string ToString()
+        {
+			return  Id + "," + Name + "," + Password + "," + Email + "," + Role;
+		}
     }
 }
