@@ -1,4 +1,7 @@
-﻿namespace KrisNikShopProject.Components.Data
+﻿using System.ComponentModel.DataAnnotations;
+using System.Reflection.Metadata.Ecma335;
+
+namespace KrisNikShopProject.Components.Data
 {
     public class UserRegistrationService
     {
@@ -24,10 +27,18 @@
             currentUser = user;
         }
 
+        public void SignInUser(UserModel user)
+        {
+            UserModel? rightUser = GetUserEmail(user.Email!);
+            if(rightUser != null && rightUser?.Password == user.Password) 
+            {
+                currentUser = rightUser;
+            }
+        }
+
         public List<UserModel> GetAllUsers()
         {
             List<UserModel> users = new List<UserModel>();
-
             using (var reader = new StreamReader(FILE_NAME))
             {
 				while (!reader.EndOfStream)
@@ -41,6 +52,22 @@
 
             return users;
         }
+
+        public UserModel? GetUserEmail(string email)
+        {   
+            UserModel? resultUser = null;
+            List<UserModel> users = GetAllUsers();
+            foreach(UserModel user in users)
+            {
+                if (email == user.Email)
+                {
+                    resultUser = user;
+                }
+            }
+            return resultUser;
+        }
+
+
 
         public string GetCurrentUserString()
         {
