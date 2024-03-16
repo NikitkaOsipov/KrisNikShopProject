@@ -1,0 +1,48 @@
+﻿@page "/moderation"
+@inject UserRegistrationService userRegistrationService
+@attribute [StreamRendering]
+
+<PageTitle>Moderator page</PageTitle>
+
+<h1>Moderation page</h1>
+
+<p>All users: </p>
+
+@if (users == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td>@user.Role</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+	private UserModel[]? users;
+
+	protected override async Task OnInitializedAsync()
+	{
+        // https://www.youtube.com/watch?v=2moh18sh5p4&ab_channel=IAmTimCorey
+		users = await Task.Run(() => userRegistrationService.GetAllUsers().ToArray());
+	}
+}

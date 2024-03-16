@@ -53,6 +53,7 @@ namespace KrisNikShopProject.Components.Data
             return users;
         }
 
+
         public UserModel? GetUserEmail(string email)
         {   
             UserModel? resultUser = null;
