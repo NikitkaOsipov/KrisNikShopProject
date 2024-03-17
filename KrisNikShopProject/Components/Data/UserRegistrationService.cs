@@ -5,7 +5,19 @@ namespace KrisNikShopProject.Components.Data
 {
     public class UserRegistrationService
     {
-        public UserModel? currentUser { get; private set; }
+        private UserModel? _currentUser;
+        public UserModel? CurrentUser
+        {
+            get => _currentUser;
+            private set
+            {
+                _currentUser = value;
+                OnCurrentUserChanged?.Invoke();
+            }
+        }
+
+        public event Action? OnCurrentUserChanged; //https://www.youtube.com/watch?v=jQgwEsJISy0&ab_channel=ProgrammingwithMosh
+
         private readonly string FILE_NAME;
 
         public UserRegistrationService()
@@ -24,7 +36,7 @@ namespace KrisNikShopProject.Components.Data
 				sw.WriteLine(user.ToString());
 			}
 
-            currentUser = user;
+            CurrentUser = user;
         }
 
         public void SignInUser(UserModel user)
@@ -32,7 +44,7 @@ namespace KrisNikShopProject.Components.Data
             UserModel? rightUser = GetUserEmail(user.Email!);
             if(rightUser != null && rightUser?.Password == user.Password) 
             {
-                currentUser = rightUser;
+                CurrentUser = rightUser;
             }
         }
 
@@ -72,7 +84,7 @@ namespace KrisNikShopProject.Components.Data
 
         public string GetCurrentUserString()
         {
-            string result = (currentUser?.Name ?? "Guest") + " " + (currentUser?.Email ?? "unknownEmail") + "!!!!";
+            string result = (CurrentUser?.Name ?? "Guest") + " " + (CurrentUser?.Email ?? "unknownEmail") + "!!!!";
 			return result;
 		}
 

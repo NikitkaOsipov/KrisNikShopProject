@@ -1,4 +1,7 @@
 ﻿@inject UserRegistrationService userRegistrationService
+@rendermode InteractiveServer
+@implements IDisposable
+
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">KrisNikShopProject</a>
@@ -36,7 +39,7 @@
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Regist
             </NavLink>
         </div>
-        @if (userRegistrationService?.currentUser?.Role == "Moderator")
+        @if (userRegistrationService?.CurrentUser?.Role == "Moderator")
         {
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="moderation">
@@ -47,3 +50,19 @@
     </nav>
 </div>
 
+@code {
+    protected override void OnInitialized()
+    {
+        userRegistrationService.OnCurrentUserChanged += HandleCurrentUserChanged;
+    }
+
+    private void HandleCurrentUserChanged()
+    {
+        InvokeAsync(StateHasChanged); //https://www.youtube.com/watch?v=JoSwm6HAYgM&ab_channel=TutorialsTeam
+    }
+
+    public void Dispose()
+    {
+        userRegistrationService.OnCurrentUserChanged -= HandleCurrentUserChanged;
+    }
+}
