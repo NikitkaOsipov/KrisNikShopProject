@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection.Metadata.Ecma335;
 
+
 namespace KrisNikShopProject.Components.Data
 {
     public class UserRegistrationService
@@ -12,7 +13,7 @@ namespace KrisNikShopProject.Components.Data
             private set
             {
                 _currentUser = value;
-                OnCurrentUserChanged?.Invoke();
+                /* OnCurrentUserChanged?.Invoke(); */
             }
         }
 
@@ -26,26 +27,33 @@ namespace KrisNikShopProject.Components.Data
 			FILE_NAME = Path.Combine(currentDirectory, Path.Combine("Components", "Collections", "Users.csv"));
 		}
 
-        public void RegisterUser(UserModel user)
+        public Boolean RegisterUser(UserModel user)
         {
-            int? maxId = GetAllUsers().Max(user => user.Id);
-            user.Id = maxId.GetValueOrDefault() + 1;
-
-			using (StreamWriter sw = new StreamWriter(FILE_NAME, true))
+            UserModel? rightUser = GetUserEmail(user.Email!);
+            if(rightUser == null) //checks if the user email is unique 
             {
-				sw.WriteLine(user.ToString());
-			}
-
-            CurrentUser = user;
+                int? maxId = GetAllUsers().Max(user => user.Id);
+                user.Id = maxId.GetValueOrDefault() + 1;
+            
+			    using (StreamWriter sw = new StreamWriter(FILE_NAME, true))
+                {
+                    sw.WriteLine(user.ToString());
+                }
+                CurrentUser = user;
+                return true; // if the user email is unique return true
+            }
+            return false; // if the user email already exixts return false
         }
 
-        public void SignInUser(UserModel user)
+        public Boolean SignInUser(UserModel user)
         {
             UserModel? rightUser = GetUserEmail(user.Email!);
             if(rightUser != null && rightUser?.Password == user.Password) 
             {
                 CurrentUser = rightUser;
+                return true; // if user is registrated returns true
             }
+            return false;//if user not registrated returns false
         }
 
         public List<UserModel> GetAllUsers()

@@ -1,6 +1,7 @@
 @page "/sign-in"
 @rendermode InteractiveServer
 @inject UserRegistrationService UserRegistrationService
+@inject NavigationManager NavigationManager
 
 <h3>Sign-in</h3>
 
@@ -30,6 +31,10 @@
 
 	private void HandleSubmit()
 	{
-		UserRegistrationService.SignInUser(UserModel);
+		if(UserRegistrationService.SignInUser(UserModel))
+		{
+			NavigationManager.NavigateTo("/", true);
+		}
+		
 	}
 }

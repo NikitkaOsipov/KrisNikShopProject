@@ -1,6 +1,7 @@
 ﻿@page "/regist"
 @rendermode InteractiveServer
 @inject UserRegistrationService UserRegistrationService
+@inject NavigationManager NavigationManager
 
 <h3>UserRegistration</h3>
 
@@ -35,6 +36,10 @@
 
 	private void HandleSubmit()
 	{
-		UserRegistrationService.RegisterUser(UserModel);
+		if(UserRegistrationService.RegisterUser(UserModel))
+		{
+			NavigationManager.NavigateTo("/", true);
+		}
+		
 	}
 }
