@@ -65,6 +65,26 @@ namespace KrisNikShopProject.Components.Data
             return users;
         }
 
+        //public async Task<UserModel[]> GetAllUsersAsync()
+        //{
+        //    List<Task<UserModel>> tasks = new List<Task<UserModel>>();
+        //    using (var reader = new StreamReader(FILE_NAME))
+        //    {
+        //        while (!reader.EndOfStream)
+        //        {
+        //            tasks.Add(Task.Run(() =>
+        //            {
+        //                string[] line = reader.ReadLine()!.Split(",");
+        //                return new UserModel(Int32.Parse(line[0]),
+        //                        line[1], line[2], line[3], line[4]);
+        //            }));
+        //        }
+        //    }
+
+        //    var result = await Task.WhenAll(tasks);
+        //    return result;
+        //}
+
 
         public UserModel? GetUserEmail(string email)
         {   

@@ -1,5 +1,13 @@
 ﻿@inherits LayoutComponentBase
+@inject UserRegistrationService userRegistrationService
+@implements IDisposable
 
+@* //The only way to make anything that Consumes a RenderFragment interactive is to wrap the component in an interactive component to let interactivity cascade.
+
+That said the only way to wrap MainLayout is to globally set the interactivity rendermode in the App.razor file on both the HeadOutlet component and the Routes component.
+
+The caveat here is that you've effectively locked yourself into the rendermode permanently for all cascading components or rather the entire app.
+// https://github.com/dotnet/aspnetcore/discussions/51491?sort=top*@
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -8,11 +16,34 @@
     <main>
         <div class="top-row px-4">
             <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+
+            @if (userRegistrationService.CurrentUser != null)
+            {
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @userRegistrationService.CurrentUser.Name
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="profile">Profile</a>
+                        <a class="dropdown-item" href="settings">Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="logout">Logout</a>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <a href="regist">Sign-up</a>
+            }
         </div>
+
+
 
         <article class="content px-4">
             @Body
         </article>
+        
+
     </main>
 </div>
 
@@ -21,3 +52,25 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        userRegistrationService.OnCurrentUserChanged += HandleCurrentUserChanged;
+    }
+
+    private void HandleCurrentUserChanged()
+    {
+        InvokeAsync(StateHasChanged); //https://www.youtube.com/watch?v=JoSwm6HAYgM&ab_channel=TutorialsTeam
+    //     InvokeAsync(() =>
+    // {
+    //     StateHasChanged();
+    //     NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+    //});
+    }
+
+    public void Dispose()
+    {
+        userRegistrationService.OnCurrentUserChanged -= HandleCurrentUserChanged;
+    }
+}
