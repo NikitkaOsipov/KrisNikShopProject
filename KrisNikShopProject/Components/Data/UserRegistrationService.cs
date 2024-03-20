@@ -13,7 +13,7 @@ namespace KrisNikShopProject.Components.Data
             private set
             {
                 _currentUser = value;
-                /* OnCurrentUserChanged?.Invoke(); */
+                OnCurrentUserChanged?.Invoke();
             }
         }
 
@@ -109,21 +109,12 @@ namespace KrisNikShopProject.Components.Data
         }
 
 
-
         public string GetCurrentUserString()
         {
             string result = (CurrentUser?.Name ?? "Guest") + " " + (CurrentUser?.Email ?? "unknownEmail") + "!!!!";
 			return result;
 		}
 
-        public string GetFileName()
-        {
-			return FILE_NAME;
-		}
-
-        public string GetUsersFromCsv()
-        {
-            return "User1,User2,User3";
-        }
+        public void SignOutUser() => CurrentUser = null;
     }
 }

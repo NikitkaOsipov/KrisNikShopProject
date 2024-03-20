@@ -31,10 +31,7 @@
 
 	private void HandleSubmit()
 	{
-		if(UserRegistrationService.SignInUser(UserModel))
-		{
-			NavigationManager.NavigateTo("/", true);
-		}
+		UserRegistrationService.SignInUser(UserModel);
 		
 	}
 }

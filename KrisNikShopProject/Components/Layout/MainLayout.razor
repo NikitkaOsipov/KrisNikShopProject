@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @inject UserRegistrationService userRegistrationService
-@implements IDisposable
+@* @implements IDisposable *@
 
 @* //The only way to make anything that Consumes a RenderFragment interactive is to wrap the component in an interactive component to let interactivity cascade.
 
@@ -15,26 +15,8 @@ The caveat here is that you've effectively locked yourself into the rendermode p
 
     <main>
         <div class="top-row px-4">
+            <ButtonUser />
             <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-
-            @if (userRegistrationService.CurrentUser != null)
-            {
-                <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @userRegistrationService.CurrentUser.Name
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="profile">Profile</a>
-                        <a class="dropdown-item" href="settings">Settings</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="logout">Logout</a>
-                    </div>
-                </div>
-            }
-            else
-            {
-                <a href="regist">Sign-up</a>
-            }
         </div>
 
 
@@ -53,7 +35,7 @@ The caveat here is that you've effectively locked yourself into the rendermode p
     <a class="dismiss">🗙</a>
 </div>
 
-@code {
+@* @code {
     protected override void OnInitialized()
     {
         userRegistrationService.OnCurrentUserChanged += HandleCurrentUserChanged;
@@ -74,3 +56,4 @@ The caveat here is that you've effectively locked yourself into the rendermode p
         userRegistrationService.OnCurrentUserChanged -= HandleCurrentUserChanged;
     }
 }
+ *@
