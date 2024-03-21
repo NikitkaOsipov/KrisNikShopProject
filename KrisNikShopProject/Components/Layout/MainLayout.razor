@@ -1,13 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @inject UserRegistrationService userRegistrationService
-@* @implements IDisposable *@
 
-@* //The only way to make anything that Consumes a RenderFragment interactive is to wrap the component in an interactive component to let interactivity cascade.
-
-That said the only way to wrap MainLayout is to globally set the interactivity rendermode in the App.razor file on both the HeadOutlet component and the Routes component.
-
-The caveat here is that you've effectively locked yourself into the rendermode permanently for all cascading components or rather the entire app.
-// https://github.com/dotnet/aspnetcore/discussions/51491?sort=top*@
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -18,8 +11,6 @@ The caveat here is that you've effectively locked yourself into the rendermode p
             <ButtonUser />
             <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
         </div>
-
-
 
         <article class="content px-4">
             @Body
