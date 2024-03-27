@@ -1,0 +1,121 @@
+﻿@page "/productpage"
+@inject ProductStorageService ProductService
+
+<h3>ProductPage</h3>
+
+@if (products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    //https://www.youtube.com/watch?v=LJtGlRuotcc&ab_channel=Netcode-Hub
+    <div class="container-fluid">
+        <div class="row featured__filter">
+            @foreach (var item in products)
+            {
+                <div class="col-lg-3 col-md-3 col-sm-6 border-success">
+                    <div class="featured__item" style="width:200px;">
+                        <div class="featured__item__pic set-bg">
+                            <NavLink href="@($"/productdetail/{item.Id}")">
+                                <img src="@item.Image" alt="@item.Name" style="width:150px; height:200px;" />
+                            </NavLink>
+                            <ul class="featured__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart text-danger"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6 class="text-primary"><a href="#">@item.Name</a></h6>
+                            <h5 class="text-danger">@item.Price</h5>
+                        </div>
+                    </div>
+                </div>
+            }
+            @* <div class="d-flex justify-content-center">
+                <SfPager @ref="@Page" Pagesize="6" NumericItemsCount="4" TotalItemsCount=products.Count ItemClick="OnPageClick"></SfPager>"
+            </div> *@
+        </div>
+    </div>
+
+}
+
+
+
+
+@code {
+    //In this code, I've added a NavLink component that wraps the img tag. The href attribute of the NavLink is set to navigate to a hypothetical "Product Detail" page for the clicked product. I've assumed that each product has a unique Id and that you have a route set up like /productdetail/{id} where {id} is the id of the product. You'll need to replace this with the actual route and parameter name if they're different.
+    private List<ProductModel> products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await Task.Run(() => ProductService.GetAllProducts());
+    }
+    // good links :https://www.youtube.com/watch?v=uDHfBGNcmFg&ab_channel=Code-Academy
+    //https://www.youtube.com/watch?v=jSs5DUHAvBc&ab_channel=PatrickGod
+}
+
+<style>
+    .featured__item {
+        /* Adjust as needed */
+        padding: 10px;
+        margin: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #f9f9f9;
+    }
+
+    .featured__item__pic {
+        /* Adjust as needed */
+        position: relative;
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .set-bg {
+        /* Adjust as needed */
+        background-color: #f0f0f0;
+    }
+
+   /*  .featured__item__text {
+        /* Adjust as needed */
+        padding: 10px;
+    }
+
+
+    .featured__item__pic__hover {
+        /* Adjust as needed */
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .featured__item__pic__hover li {
+        margin: 0 10px;
+        display: none; /* Hide the links by default */
+    }
+
+    .featured__item__pic__hover li a {
+        color: #fff;
+        font-size: 20px;
+    }
+
+    .featured__item__pic:hover .featured__item__pic__hover {
+        opacity: 1;
+    }
+
+    .featured__item__pic:hover .featured__item__pic__hover li {
+        display: block; /* Show the links on hover */
+    } */
+ </style>

@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();  
 builder.Services.AddSingleton<UserRegistrationService>(); //https://www.youtube.com/watch?v=roWkfJoDf3w&list=PLfbOp004UaYX7DQVLu4pheJWY8t-a3X60&index=5&ab_channel=GeraldVersluis
+builder.Services.AddSingleton<ProductStorageService>();
 
 var app = builder.Build();
 
