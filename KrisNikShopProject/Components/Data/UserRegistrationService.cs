@@ -66,7 +66,8 @@ namespace KrisNikShopProject.Components.Data
                     string[] line = reader.ReadLine()!.Split(",");
 					users.Add(new UserModel(Int32.Parse(line[0]), 
                         line[1], line[2], 
-                        line[3], line[4]));
+                        line[3], line[4],
+                        DateTime.Parse(line[5]), line[6]));
 				}
 			}
 
@@ -106,6 +107,29 @@ namespace KrisNikShopProject.Components.Data
                 }
             }
             return resultUser;
+        }
+
+        public void ChangeUserData(UserModel changeDataUser)
+        {
+            List<UserModel> users = GetAllUsers();
+
+            for (int i = 0; i < users.Count; i++) // Find user and change it's data
+            {
+                if (users[i].Email == changeDataUser.Email)
+                {
+                    users[i] = changeDataUser;
+                }
+            }
+
+            using (StreamWriter sw = new StreamWriter(FILE_NAME)) // rewrite all users
+            {
+                foreach (UserModel user in users)
+                {
+                    sw.WriteLine(user.ToString());
+                }
+            }
+
+            CurrentUser = changeDataUser;
         }
 
 

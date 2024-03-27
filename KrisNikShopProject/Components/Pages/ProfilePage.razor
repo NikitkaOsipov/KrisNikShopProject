@@ -1,0 +1,22 @@
+@page "/profile"
+@inject NavigationManager NavigationManager
+@inject UserRegistrationService userRegistrationService
+@rendermode InteractiveServer
+
+<div class="container">
+    <h2>@userRegistrationService?.CurrentUser?.Name's Profile</h2>
+    <div class="profile-info">
+        <p><strong>Email:</strong> @userRegistrationService?.CurrentUser?.Email</p>
+        <p><strong>Username:</strong> @userRegistrationService?.CurrentUser?.Name</p>
+        <p><strong>Phone number:</strong> @userRegistrationService?.CurrentUser?.PhoneNumber</p>
+        <p><strong>Date of creation:</strong> @userRegistrationService?.CurrentUser?.DateOfCreating</p>
+    </div>
+    <button class="btn btn-primary" @onclick="NavigateToEditPage">Edit Profile</button>
+</div>
+
+@code {
+    private void NavigateToEditPage()
+    {
+        NavigationManager.NavigateTo("/editprofile");
+    }
+}
