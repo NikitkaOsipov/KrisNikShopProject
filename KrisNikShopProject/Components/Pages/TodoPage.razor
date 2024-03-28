@@ -5,7 +5,7 @@
 <ul> 
     @foreach (var todo in todos) { 
     <li>
-        <input type="checkbox" @bind="todo.IsDone" @onchange=/> 
+        <input type="checkbox" @bind="todo.IsDone" /> 
         <input @bind="todo.Title" /> 
     </li> 
     } 
@@ -15,25 +15,51 @@
 { 
     private List<TodoItem>? todos; 
     string newTodo = ""; 
-    private readonly string FILE_NAME = Path.Combine(Directory.GetCurrentDirectory(), Path.Combine("Components", "Collections", "ToDoList.csv")); 
+    private static readonly string FILE_NAME = Path.Combine(Directory.GetCurrentDirectory(), Path.Combine("Components", "Collections", "ToDoList.csv")); 
+
     protected override void OnInitialized() 
     {
          todos = ReadToDo(); 
     } 
-    public List<TodoItem> ReadToDo() 
+
+    public static List<TodoItem> ReadToDo() 
     { 
         List<TodoItem> users = new List<TodoItem>(); 
         using (var reader = new StreamReader(FILE_NAME)) 
         {
-        while (!reader.EndOfStream)
-        { 
-            string[] line = reader.ReadLine()!.Split(",");
-            users.Add(new TodoItem { Title = line[0], IsDone = Boolean.Parse(line[1])});
-        }
+            while (!reader.EndOfStream)
+            { 
+                string[] line = reader.ReadLine()!.Split(",");
+                TodoItem item = new TodoItem { Title = line[0] };
+                item.isDoneSet(Boolean.Parse(line[1]));
+                users.Add(item);
+            }
         }
         return users; 
+    } 
+
+    public static void ReWrite(TodoItem todo)
+    {
+        List<TodoItem> todos = ReadToDo();
+        for (int i = 0; i < todos.Count; i++)
+        {
+            if(todos[i].Title == todo.Title)
+            {
+                todos[i].IsDone = todo.IsDone;
+            }
+        }
+        
+        using (StreamWriter sw = new StreamWriter(FILE_NAME, false)) 
+        { 
+            foreach (var item in todos)
+            {
+                sw.WriteLine(todo.Title + ", " + todo.IsDone); 
+            }
+                
         } 
-        void AddTodo() 
+    }
+
+    void AddTodo() 
         { 
         if (!string.IsNullOrWhiteSpace(newTodo))
             { 
@@ -42,12 +68,28 @@
                 using (StreamWriter sw = new StreamWriter(FILE_NAME, true)) 
                 { 
                 sw.WriteLine(todo.Title + ", " + todo.IsDone); 
-                } newTodo = string.Empty; 
+                } 
+            newTodo = string.Empty; 
             } 
-            } 
+        } 
+
     public class TodoItem 
     { 
         public string? Title { get; set; } 
-        public bool IsDone { get; set; } = false; 
+        private bool isDone = false; 
+        public bool IsDone 
+        {
+            get => isDone; 
+            set 
+            {
+                isDone = value;
+                ReWrite(this);
+            }
+        }
+
+        public void isDoneSet(bool value)
+        {
+            isDone = value;
+        }
     } 
 }
