@@ -1,5 +1,7 @@
 ﻿@page "/moderation"
 @inject UserRegistrationService userRegistrationService
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
 @attribute [StreamRendering]
 
 <PageTitle>Moderator page</PageTitle>
@@ -23,6 +25,7 @@ else
                 <th>Role</th>
                 <th>Creation date</th>
                 <th>Phone num</th>
+                <th>Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -35,6 +38,7 @@ else
                     <td>@user.Role</td>
                     <td>@user.DateOfCreating</td>
                     <td>@user.PhoneNumber</td>
+                    <td><button @onclick="(() => EditUser(user.Email))">Edit</button></td> <!-- New cell with the edit button -->
                 </tr>
             }
         </tbody>
@@ -50,4 +54,9 @@ else
 		users = await Task.Run(() => userRegistrationService.GetAllUsers().ToArray());
         //https://learn.microsoft.com/en-us/training/modules/interact-with-data-blazor-web-apps/5-exercise-access-data-from-blazor-components
 	}
+
+    private void EditUser(string email)
+    {
+        NavigationManager.NavigateTo($"/editprofile/{email}");
+    }
 }

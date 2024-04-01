@@ -1,40 +1,53 @@
-@page "/editprofile"
+@page "/editprofile/{UserEmail}"
 @inject UserRegistrationService userRegistrationService
 @inject NavigationManager NavigationManager
 @rendermode InteractiveServer
 
-<EditForm Model="@userToChange" OnValidSubmit="HandleValidSubmit">
+<EditForm Model="@UserToChange" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator />
     <div class="container">
-        <h2>Edit @userToChange?.Name's Profile</h2>
+        <h2>Edit @UserToChange?.Name's Profile</h2>
         <div class="form-group">
             <label for="email">Email:</label>
-            <InputText id="email" class="form-control" @bind-Value="userToChange.Email" />
+            <InputText id="email" class="form-control" @bind-Value="UserToChange.Email" />
         </div>
         <div class="form-group">
             <label for="username">Username:</label>
-            <InputText id="username" class="form-control" @bind-Value="userToChange.Name" />
+            <InputText id="username" class="form-control" @bind-Value="UserToChange.Name" />
         </div>
         <div class="form-group">
             <label for="phoneNumber">Phone number:</label>
-            <InputText id="phoneNumber" class="form-control" @bind-Value="userToChange.PhoneNumber" />
+            <InputText id="phoneNumber" class="form-control" @bind-Value="UserToChange.PhoneNumber" />
         </div>
         <button type="submit" class="btn btn-primary">Save Changes</button>
     </div>
 </EditForm>
 
-@code {
-    UserModel? userToChange;
+<button type="button" class="btn btn-danger" @onclick="HandleDelete">Delete Account</button>
 
-    protected override void OnInitialized()
+
+@code {
+    [Parameter]
+    public string UserEmail { get; set; } = string.Empty;
+
+    public UserModel? UserToChange { get; set; }
+
+    protected override void OnParametersSet()
     {
-        userToChange = userRegistrationService.CurrentUser ?? new UserModel();
+        UserToChange = userRegistrationService.GetUserEmail(UserEmail);
     }
 
     private void HandleValidSubmit()
     {
-        userRegistrationService.ChangeUserData(userToChange!);
-        NavigationManager.NavigateTo("/profile");
+        userRegistrationService.ChangeUserData(UserToChange!);
+        NavigationManager.NavigateTo("/");
         // Handle the form submission here. For example, you might call a method on the userRegistrationService to save the changes.
     }
+
+    private void HandleDelete()
+    {
+        userRegistrationService.DeleteUser(UserToChange!);
+        NavigationManager.NavigateTo("/");
+    }
+
 }

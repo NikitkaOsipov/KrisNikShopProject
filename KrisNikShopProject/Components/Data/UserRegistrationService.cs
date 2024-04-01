@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Reflection.Metadata.Ecma335;
+﻿using System.Globalization;
 
 
 namespace KrisNikShopProject.Components.Data
@@ -67,7 +66,7 @@ namespace KrisNikShopProject.Components.Data
 					users.Add(new UserModel(Int32.Parse(line[0]), 
                         line[1], line[2], 
                         line[3], line[4],
-                        DateTime.Parse(line[5]), line[6]));
+                        DateTime.ParseExact(line[5], "dd-MMM-yy HH:mm:ss", CultureInfo.InvariantCulture), line[6]));
 				}
 			}
 
@@ -115,7 +114,7 @@ namespace KrisNikShopProject.Components.Data
 
             for (int i = 0; i < users.Count; i++) // Find user and change it's data
             {
-                if (users[i].Email == changeDataUser.Email)
+                if (users[i].Id == changeDataUser.Id)
                 {
                     users[i] = changeDataUser;
                 }
@@ -129,8 +128,35 @@ namespace KrisNikShopProject.Components.Data
                 }
             }
 
-            CurrentUser = changeDataUser;
+            if (CurrentUser?.Id == changeDataUser.Id)
+                CurrentUser = changeDataUser;
         }
+
+        public void DeleteUser(UserModel userToDelete)
+        {
+            List<UserModel> users = GetAllUsers();
+
+            users.RemoveAll(user => user.Email == userToDelete.Email);
+
+            for (int i = 0; i < users.Count; i++)
+            {
+                users[i].Id = i + 1;
+            }
+
+            using (StreamWriter sw = new StreamWriter(FILE_NAME)) // rewrite all users
+            {
+                foreach (UserModel user in users)
+                {
+                    sw.WriteLine(user.ToString());
+                }
+            }
+
+            if (CurrentUser?.Email == userToDelete.Email)
+            {
+                CurrentUser = null;
+            }
+        }
+
 
 
         public string GetCurrentUserString()

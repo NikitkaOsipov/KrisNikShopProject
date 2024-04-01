@@ -17,6 +17,6 @@
 @code {
     private void NavigateToEditPage()
     {
-        NavigationManager.NavigateTo("/editprofile");
+        NavigationManager.NavigateTo($"/editprofile/{userRegistrationService.CurrentUser!.Email}");
     }
 }
