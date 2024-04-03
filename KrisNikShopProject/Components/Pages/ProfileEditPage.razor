@@ -22,8 +22,11 @@
         <button type="submit" class="btn btn-primary">Save Changes</button>
     </div>
 </EditForm>
-
-<button type="button" class="btn btn-danger" @onclick="HandleDelete">Delete Account</button>
+@if (UserToChange?.Role == "User")
+{
+    <button type="button" class="btn btn-danger" @onclick="HandleDelete">Delete Account</button>
+}
+    
 
 
 @code {
