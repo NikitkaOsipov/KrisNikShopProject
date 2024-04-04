@@ -1,5 +1,6 @@
 ﻿@page "/productpage"
 @inject ProductStorageService ProductService
+@attribute [StreamRendering]
 
 <h3>ProductPage</h3>
 
@@ -16,21 +17,18 @@ else
             {
                 <div class="col-lg-3 col-md-3 col-sm-6 border-success">
                     <div class="featured__item" style="width:200px;">
+                        <NavLink href="@($"/productdetail/{item.Id}")">
                         <div class="featured__item__pic set-bg">
-                            <NavLink href="@($"/productdetail/{item.Id}")">
-                                <img src="@item.Image" alt="@item.Name" style="width:150px; height:200px;" />
-                            </NavLink>
-                            <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart text-danger"></i></a></li>
-                            </ul>
+                            
+                                <img src="@item.Image" alt="@item.Name" style="width:200px; height:200px;" />
+                            
                         </div>
                         <div class="featured__item__text">
-                            <h6 class="text-primary"><a href="#">@item.Name</a></h6>
+                            <h6 class="text-primary">@item.Name</h6>
                             <h5 class="text-danger">@item.Price</h5>
                         </div>
-                    </div>
+                        </NavLink>
+                    </div>    
                 </div>
             }
             @* <div class="d-flex justify-content-center">
@@ -46,7 +44,7 @@ else
 
 @code {
     //In this code, I've added a NavLink component that wraps the img tag. The href attribute of the NavLink is set to navigate to a hypothetical "Product Detail" page for the clicked product. I've assumed that each product has a unique Id and that you have a route set up like /productdetail/{id} where {id} is the id of the product. You'll need to replace this with the actual route and parameter name if they're different.
-    private List<ProductModel> products;
+    private List<ProductModel>? products;
 
     protected override async Task OnInitializedAsync()
     {

@@ -1,0 +1,35 @@
+@page "/productdetail/{Id}"
+@inject ProductStorageService productStorageService
+@* @inject CartService cartService *@
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+
+    private ProductModel? product;
+
+    protected override async Task OnInitializedAsync()
+    {
+        product = await Task.Run(()=>productStorageService.GetProductById(int.Parse(Id)));
+    }
+
+    private void AddToCart()
+    {
+        //cartService.AddProduct(product);
+    }
+}
+
+@if (product == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="product-detail">
+        <h2>@product.Name</h2>
+        <img src="@product.Image" alt="@product.Name" style="width:150px; height:200px;" />
+        <p>@product.Description</p>
+        <p>Price: @product.Price.ToString("C")</p>
+        <button class="btn btn-primary" @onclick="AddToCart">Add to Cart</button>
+    </div>
+}
