@@ -138,11 +138,6 @@ namespace KrisNikShopProject.Components.Data
 
             users.RemoveAll(user => user.Email == userToDelete.Email);
 
-            for (int i = 0; i < users.Count; i++)
-            {
-                users[i].Id = i + 1;
-            }
-
             using (StreamWriter sw = new StreamWriter(FILE_NAME)) // rewrite all users
             {
                 foreach (UserModel user in users)
