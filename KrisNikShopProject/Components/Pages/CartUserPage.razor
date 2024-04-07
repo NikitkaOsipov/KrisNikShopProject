@@ -1,0 +1,29 @@
+﻿@page "/cart/{userId:int}"
+@inject CartStorageService CartStorageService
+<h3>CartUserPage</h3>
+
+@if (cartItems == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <ul>
+        @foreach (var item in cartItems)
+        {
+            <li>@item.Name</li>
+        }
+    </ul>
+}
+
+@code {
+    [Parameter]
+    public int UserId { get; set; }
+
+    private List<ProductModel> cartItems;
+
+    protected override async Task OnInitializedAsync()
+    {
+        cartItems = await Task.Run(() => CartStorageService.GetAllProducts());
+    }
+}
