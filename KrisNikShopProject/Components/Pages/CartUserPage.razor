@@ -11,7 +11,21 @@ else
     <ul>
         @foreach (var item in cartItems)
         {
-            <li>@item.Name</li>
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="@item.Image" alt="@item.Name" class="img-fluid" />
+                </div>
+                <div class="col-md-4">
+                    <h5>@item.Name</h5>
+                    <p>@item.Description</p>
+                    <p>Price: @item.Price</p>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-danger" @onclick="() => RemoveFromCart(item)">Remove from Cart</button>
+                    <button class="btn btn-primary" @onclick="() => OrderItem(item)">Order Item</button>
+                </div>
+            </div>
+            <hr />
         }
     </ul>
 }
@@ -26,4 +40,88 @@ else
     {
         cartItems = await Task.Run(() => CartStorageService.GetAllProducts());
     }
+
+    private void RemoveFromCart(ProductModel item)
+    {
+        // Implement the logic to remove the item from the cart
+    }
+
+    private void OrderItem(ProductModel item)
+    {
+        // Implement the logic to order the item
+    }
 }
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .row {
+        margin-bottom: 20px;
+        padding: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+    }
+
+        .row:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+    .col-md-4 {
+        padding: 10px;
+    }
+
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+    }
+
+    h5 {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    p {
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .btn-danger {
+        background-color: #f44336;
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+    }
+
+        .btn-danger:hover {
+            background-color: #da190b;
+            color: white;
+        }
+
+    .btn-primary {
+        background-color: #008CBA;
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+    }
+
+        .btn-primary:hover {
+            background-color: #006494;
+            color: white;
+        }
+</style>
