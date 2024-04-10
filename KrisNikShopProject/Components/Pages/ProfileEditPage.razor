@@ -1,6 +1,7 @@
 @page "/editprofile/{UserEmail}"
 @inject UserRegistrationService userRegistrationService
 @inject NavigationManager NavigationManager
+@inject CartStorageService CartStorageService
 @rendermode InteractiveServer
 
 <EditForm Model="@UserToChange" OnValidSubmit="HandleValidSubmit">
@@ -49,6 +50,7 @@
 
     private void HandleDelete()
     {
+        CartStorageService.DeleteCart(UserToChange?.Id);
         userRegistrationService.DeleteUser(UserToChange!);
         NavigationManager.NavigateTo("/");
     }

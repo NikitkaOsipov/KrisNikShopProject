@@ -35,9 +35,23 @@
                 }
             }
         }
+        public void DeleteCart(int? ID)
+        {
+            if (userRegistrationService.CurrentUser != null)
+            {
+                string fileName = Path.Combine(FILE_PATH, $"{ID}_cart.csv");
+
+                if (File.Exists(fileName))
+                {
+                    File.Delete(fileName);
+                }
+            }
+        }
 
         public List<ProductModel> GetAllProducts()
         {
+            // Need to count the quantity of items that have the same id
+            
             List<ProductModel> products = new List<ProductModel>();
 
              string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService?.CurrentUser?.Id ?? 0}_cart.csv");
