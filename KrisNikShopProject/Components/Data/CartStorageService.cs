@@ -4,9 +4,12 @@
     {
         private readonly UserRegistrationService userRegistrationService;
         private readonly ProductStorageService productStorageService;
+        private readonly string FILE_PATH;
          
         public CartStorageService(UserRegistrationService userRegistrationService, ProductStorageService productStorageService)
         {
+            string currentDirectory = Directory.GetCurrentDirectory();
+			FILE_PATH = Path.Combine(currentDirectory, Path.Combine("Components", "Collections", "UsersCarts"));
             this.userRegistrationService = userRegistrationService;
             this.productStorageService = productStorageService;
             //In this code, the CartStorageService constructor takes a UserRegistrationService parameter,
@@ -18,7 +21,7 @@
         {
             if (userRegistrationService.CurrentUser != null)
             {
-                string fileName = $"C:\\Users\\osipo\\BlazorProjects\\KrisNikShopProject\\KrisNikShopProject\\Components\\Collections\\UsersCarts\\{userRegistrationService.CurrentUser.Id}_cart.csv";
+                string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService.CurrentUser.Id}_cart.csv");
 
                 if (!File.Exists(fileName))
                 {
@@ -37,7 +40,7 @@
         {
             List<ProductModel> products = new List<ProductModel>();
 
-            string fileName = $"C:\\Users\\osipo\\BlazorProjects\\KrisNikShopProject\\KrisNikShopProject\\Components\\Collections\\UsersCarts\\{userRegistrationService.CurrentUser.Id}_cart.csv";
+             string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService?.CurrentUser?.Id ?? 0}_cart.csv");
 
             if (File.Exists(fileName))
             {
