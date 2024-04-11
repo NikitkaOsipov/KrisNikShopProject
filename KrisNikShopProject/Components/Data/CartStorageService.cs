@@ -28,11 +28,25 @@
                     File.Create(fileName).Close();
                 }
 
-                // Append the product to the file
-                using (StreamWriter sw = File.AppendText(fileName))
-                {
-                    sw.WriteLine($"{product.Id},{product.Name}"); 
-                }
+                ProductModel[]? existingProducts = GetAllProducts().ToArray();
+                    if(existingProducts.FirstOrDefault(p => p.Id == product.Id) != null)
+                    {
+                        using (var sw = new StreamWriter(fileName))
+                        {
+                            existingProducts.FirstOrDefault(p => p.Id == product.Id).Quantity += count;
+                            foreach (ProductModel? p in existingProducts)
+                            {
+                                sw.WriteLine($"{p.Id},{p.Quantity}");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        using (var sw = new StreamWriter(fileName, true))
+                        {
+                            sw.WriteLine($"{product.Id},{count}");
+                        }
+                    }
             }
         }
         public void DeleteCart(int? ID)
@@ -47,6 +61,28 @@
                 }
             }
         }
+
+        public void RemoveFromCarts(ProductModel product, int count = 1)
+        {
+            if (userRegistrationService.CurrentUser != null)
+            {
+                string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService.CurrentUser.Id}_cart.csv");
+
+                ProductModel[]? existingProducts = GetAllProducts().ToArray();
+                    if(existingProducts.FirstOrDefault(p => p.Id == product.Id) != null)
+                    {
+                        using (var sw = new StreamWriter(fileName))
+                        {
+                            existingProducts.FirstOrDefault(p => p.Id == product.Id).Quantity -= count;
+                            foreach (ProductModel? p in existingProducts)
+                            {
+                                sw.WriteLine($"{p.Id},{p.Quantity}");
+                            }
+                        }
+                    }
+            }
+        }
+        
 
         public List<ProductModel> GetAllProducts()
         {
@@ -64,7 +100,8 @@
                     while ((line = reader.ReadLine()) != null)
                     {
                         string[] parts = line.Split(',');
-                        ProductModel product = productStorageService.GetProductById(int.Parse(parts[0]));
+                        ProductModel? product = productStorageService.GetProductById(int.Parse(parts[0]));
+                        product!.Quantity = int.Parse(parts[1]);
                         products.Add(product);
                     }
                 }

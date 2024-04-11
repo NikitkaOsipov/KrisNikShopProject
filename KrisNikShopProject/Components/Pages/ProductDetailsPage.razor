@@ -22,6 +22,8 @@ else
         } else
         {
             <button class="btn btn-primary" @onclick="AddToCart">Add to Cart</button>
+            <input type="range" min="@MinValue" max="@MaxValue" @bind="CurrentValue" @oninput="ValueChanged" />
+            <p>@CurrentValue</p>
             @if (isAddedToCart)
             {
                 <p>Product was added to cart.</p>
@@ -30,7 +32,21 @@ else
     </div>
 }
 
-@code {
+@code {    
+    public int MinValue { get; set; } = 1;
+    public int MaxValue { get; set; } = 50;
+    public int CurrentValue { get; set; } = 1;
+    public EventCallback<int> CurrentValueChanged { get; set; }
+
+    private async Task ValueChanged(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value.ToString(), out int newValue))
+        {
+            CurrentValue = newValue;
+            await CurrentValueChanged.InvokeAsync(CurrentValue);
+        }
+    }
+
     [Parameter]
     public string? Id { get; set; }
 
@@ -44,7 +60,7 @@ else
 
     private void AddToCart()
     {
-        cartStorageService.AddProduct(product);
+        cartStorageService.AddProduct(product, CurrentValue);
         isAddedToCart = true;
     }
 }

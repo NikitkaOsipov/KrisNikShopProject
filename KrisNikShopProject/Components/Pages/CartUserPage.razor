@@ -1,5 +1,6 @@
 ﻿@page "/cart/{userId:int}"
 @inject CartStorageService CartStorageService
+@rendermode InteractiveServer
 <h3>CartUserPage</h3>
 
 @if (cartItems == null)
@@ -19,6 +20,7 @@ else
                     <h5>@item.Name</h5>
                     <p>@item.Description</p>
                     <p>Price: @item.Price</p>
+                    <p>Quantity: @item.Quantity</p>
                 </div>
                 <div class="col-md-4">
                     <button class="btn btn-danger" @onclick="() => RemoveFromCart(item)">Remove from Cart</button>
@@ -43,7 +45,7 @@ else
 
     private void RemoveFromCart(ProductModel item)
     {
-        
+        CartStorageService.RemoveFromCarts(item);
     }
 
     private void OrderItem(ProductModel item)
