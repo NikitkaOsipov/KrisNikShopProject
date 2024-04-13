@@ -68,18 +68,28 @@
             {
                 string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService.CurrentUser.Id}_cart.csv");
 
-                ProductModel[]? existingProducts = GetAllProducts().ToArray();
-                    if(existingProducts.FirstOrDefault(p => p.Id == product.Id) != null)
+                List<ProductModel>? cartProducts = GetAllProducts();
+                
+
+                if(cartProducts.FirstOrDefault(p => p.Id == product.Id) != null)
+                {
+                    ProductModel? productToChange = cartProducts.FirstOrDefault(p => p.Id == product.Id);
+                    productToChange.Quantity -= count;
+
+                    if (productToChange.Quantity <= 0) 
                     {
-                        using (var sw = new StreamWriter(fileName))
+                        cartProducts.Remove(productToChange);
+                    }
+
+                    using (var sw = new StreamWriter(fileName))
+                    {
+                        
+                        foreach (ProductModel? p in cartProducts)
                         {
-                            existingProducts.FirstOrDefault(p => p.Id == product.Id).Quantity -= count;
-                            foreach (ProductModel? p in existingProducts)
-                            {
-                                sw.WriteLine($"{p.Id},{p.Quantity}");
-                            }
+                            sw.WriteLine($"{p.Id},{p.Quantity}");
                         }
                     }
+                }
             }
         }
         

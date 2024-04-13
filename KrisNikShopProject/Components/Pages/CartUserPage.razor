@@ -21,9 +21,11 @@ else
                     <p>@item.Description</p>
                     <p>Price: @item.Price</p>
                     <p>Quantity: @item.Quantity</p>
+                    <input type="range" min="1" max="@item.Quantity" @bind="quantitiesToRemove[item.Id]" @oninput="UpdateQuantityToRemove" class="slider" />
+                    <span>@quantitiesToRemove[item.Id]</span>
                 </div>
                 <div class="col-md-4">
-                    <button class="btn btn-danger" @onclick="() => RemoveFromCart(item)">Remove from Cart</button>
+                    <button class="btn btn-danger" @onclick="() => RemoveFromCart(item, quantitiesToRemove[item.Id])">Remove from Cart</button>
                     <button class="btn btn-primary" @onclick="() => OrderItem(item)">Order Item</button>
                 </div>
             </div>
@@ -37,20 +39,37 @@ else
     public int UserId { get; set; }
 
     private List<ProductModel> cartItems;
+    private Dictionary<int, int> quantitiesToRemove = new Dictionary<int, int>();
 
     protected override async Task OnInitializedAsync()
     {
         cartItems = await Task.Run(() => CartStorageService.GetAllProducts());
+        foreach (var item in cartItems)
+        {
+            quantitiesToRemove[item.Id] = 1;
+        }
     }
 
-    private void RemoveFromCart(ProductModel item)
+    private void RemoveFromCart(ProductModel item, int quantityToRemove)
     {
-        CartStorageService.RemoveFromCarts(item);
+        CartStorageService.RemoveFromCarts(item, quantityToRemove);
+        cartItems = CartStorageService.GetAllProducts();
+        StateHasChanged();
+
+        foreach (var cartItem in cartItems)
+        {
+            quantitiesToRemove[cartItem.Id] = 1;
+        }
     }
 
     private void OrderItem(ProductModel item)
     {
         // Implement the logic to order the item
+    }
+
+    private void UpdateQuantityToRemove(ChangeEventArgs e)
+    {
+        StateHasChanged();
     }
 }
 
