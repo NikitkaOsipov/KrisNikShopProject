@@ -4,7 +4,6 @@
     {
         public int Id { get; set; }
         public int Quantity { get; set; } = 1;
-        public int? DistanceToLatvia { get; set; }
         public double Price { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
@@ -19,7 +18,7 @@
         {
         }
 
-        public ProductModel(int id, string name, string description, double price, int quantity, string category, string brand, string size, string material, string country, int distanceToLatvia, string image)
+        public ProductModel(int id, string name, string description, double price, int quantity, string category, string brand, string size, string material, string country, string image)
         {
             Id = id;
             Name = name;
@@ -32,7 +31,7 @@
             Material = material;
             Image = image;
             Country = country;
-            DistanceToLatvia = distanceToLatvia;
+
         }
 
         public override string ToString()

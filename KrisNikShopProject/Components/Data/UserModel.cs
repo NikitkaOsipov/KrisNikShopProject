@@ -10,6 +10,9 @@ namespace KrisNikShopProject.Components.Data
         public string? Role { get; set; } = "User";
         public DateTime? DateOfCreating { get; }
         public string? PhoneNumber { get; set; }
+        public string? CardNumber {get; set;}
+        public string? CardCode {get; set;}
+        public string? CardDate {get; set;}
 
 		public UserModel()
         {

@@ -1,4 +1,6 @@
-﻿namespace KrisNikShopProject.Components.Data
+﻿using Newtonsoft.Json;
+
+namespace KrisNikShopProject.Components.Data
 {
     public class OrderStorageService
     {
@@ -18,107 +20,95 @@
             //which can then be used throughout the CartStorageService class.
         }
 
-        public void AddProduct(ProductModel product, int count = 1)
+        public void AddOrder(OrderModel product)
         {
             if (userRegistrationService.CurrentUser != null)
             {
-                string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService.CurrentUser.Id}_cart.csv");
+                string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService.CurrentUser.Id}_orders.csv");
 
                 if (!File.Exists(fileName))
                 {
                     File.Create(fileName).Close();
                 }
 
-                ProductModel[]? existingProducts = GetAllProducts().ToArray();
-                if (existingProducts.FirstOrDefault(p => p.Id == product.Id) != null)
-                {
-                    using (var sw = new StreamWriter(fileName))
-                    {
-                        existingProducts.FirstOrDefault(p => p.Id == product.Id).Quantity += count;
-                        foreach (ProductModel? p in existingProducts)
-                        {
-                            sw.WriteLine($"{p.Id},{p.Quantity}");
-                        }
-                    }
-                }
-                else
-                {
-                    using (var sw = new StreamWriter(fileName, true))
-                    {
-                        sw.WriteLine($"{product.Id},{count}");
-                    }
-                }
-            }
-        }
-        public void DeleteCart(int? ID)
-        {
-            if (userRegistrationService.CurrentUser != null)
-            {
-                string fileName = Path.Combine(FILE_PATH, $"{ID}_cart.csv");
+                string info = JsonConvert.SerializeObject(product);
 
-                if (File.Exists(fileName))
+                using (var sw = new StreamWriter(fileName, true))
                 {
-                    File.Delete(fileName);
+                    sw.WriteLine(info);
                 }
             }
         }
 
-        public void RemoveFromCarts(ProductModel product, int count = 1)
-        {
-            if (userRegistrationService.CurrentUser != null)
-            {
-                string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService.CurrentUser.Id}_cart.csv");
+        // public void DeleteCart(int? ID)
+        // {
+        //     if (userRegistrationService.CurrentUser != null)
+        //     {
+        //         string fileName = Path.Combine(FILE_PATH, $"{ID}_cart.csv");
 
-                List<ProductModel>? cartProducts = GetAllProducts();
+        //         if (File.Exists(fileName))
+        //         {
+        //             File.Delete(fileName);
+        //         }
+        //     }
+        // }
 
+        // public void RemoveFromCarts(ProductModel product, int count = 1)
+        // {
+        //     if (userRegistrationService.CurrentUser != null)
+        //     {
+        //         string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService.CurrentUser.Id}_orders.csv");
 
-                if (cartProducts.FirstOrDefault(p => p.Id == product.Id) != null)
-                {
-                    ProductModel? productToChange = cartProducts.FirstOrDefault(p => p.Id == product.Id);
-                    productToChange.Quantity -= count;
-
-                    if (productToChange.Quantity <= 0)
-                    {
-                        cartProducts.Remove(productToChange);
-                    }
-
-                    using (var sw = new StreamWriter(fileName))
-                    {
-
-                        foreach (ProductModel? p in cartProducts)
-                        {
-                            sw.WriteLine($"{p.Id},{p.Quantity}");
-                        }
-                    }
-                }
-            }
-        }
+        //         List<ProductModel>? cartProducts = GetAllProducts();
 
 
-        public List<ProductModel> GetAllProducts()
-        {
-            // Need to count the quantity of items that have the same id
+        //         if (cartProducts.FirstOrDefault(p => p.Id == product.Id) != null)
+        //         {
+        //             ProductModel? productToChange = cartProducts.FirstOrDefault(p => p.Id == product.Id);
+        //             productToChange.Quantity -= count;
 
-            List<ProductModel> products = new List<ProductModel>();
+        //             if (productToChange.Quantity <= 0)
+        //             {
+        //                 cartProducts.Remove(productToChange);
+        //             }
 
-            string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService?.CurrentUser?.Id ?? 0}_cart.csv");
+        //             using (var sw = new StreamWriter(fileName))
+        //             {
 
-            if (File.Exists(fileName))
-            {
-                using (var reader = new StreamReader(fileName))
-                {
-                    string? line;
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        string[] parts = line.Split(',');
-                        ProductModel? product = productStorageService.GetProductById(int.Parse(parts[0]));
-                        product!.Quantity = int.Parse(parts[1]);
-                        products.Add(product);
-                    }
-                }
-            }
+        //                 foreach (ProductModel? p in cartProducts)
+        //                 {
+        //                     sw.WriteLine($"{p.Id},{p.Quantity}");
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
-            return products;
-        }
+
+        // public List<OrderModel> GetAllProducts()
+        // {
+        //     // Need to count the quantity of items that have the same id
+
+        //     List<OrderModel> products = new List<OrderModel>();
+
+        //     string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService?.CurrentUser?.Id ?? 0}_orders.csv");
+
+        //     if (File.Exists(fileName))
+        //     {
+        //         using (var reader = new StreamReader(fileName))
+        //         {
+        //             string? line;
+        //             while ((line = reader.ReadLine()) != null)
+        //             {
+        //                 string[] parts = line.Split(',');
+        //                 ProductModel? product = productStorageService.GetProductById(int.Parse(parts[0]));
+        //                 product!.Quantity = int.Parse(parts[1]);
+        //                 products.Add(product);
+        //             }
+        //         }
+        //     }
+
+        //     return products;
+        // }
     }
 }
