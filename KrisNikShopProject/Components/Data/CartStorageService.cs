@@ -53,7 +53,7 @@
         {
             if (userRegistrationService.CurrentUser != null)
             {
-                string fileName = Path.Combine(FILE_PATH, $"{ID}_cart.csv");
+                string fileName = Path.Combine(FILE_PATH, $"{ID}_cart.json");
 
                 if (File.Exists(fileName))
                 {

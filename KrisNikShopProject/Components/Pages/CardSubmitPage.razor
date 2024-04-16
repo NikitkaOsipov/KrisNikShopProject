@@ -1,0 +1,43 @@
+@page "/card"
+
+<div class="modal">
+    <div class="modal-content">
+        <h2>Enter Card Details</h2>
+        <EditForm Model="cardDetails" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                <label for="cardNumber">Card Number:</label>
+                <InputText id="cardNumber" class="form-control" @bind-Value="cardDetails.CardNumber" />
+            </div>
+            <div class="form-group">
+                <label for="csc">CSC:</label>
+                <InputText id="csc" class="form-control" @bind-Value="cardDetails.CSC" />
+            </div>
+            <div class="form-group">
+                <label for="expiryYear">Expiry Year:</label>
+                <InputText id="expiryYear" class="form-control" @bind-Value="cardDetails.ExpiryYear" />
+            </div>
+            <div class="form-group">
+                <label for="nameOnCard">Name on Card:</label>
+                <InputText id="nameOnCard" class="form-control" @bind-Value="cardDetails.NameOnCard" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </EditForm>
+    </div>
+</div>
+
+@code 
+{
+    private void HandleValidSubmit()
+    {
+        
+    }
+
+    public class cardDetails
+    {
+        public string CardNumber { get; set; }
+        public string CSC { get; set; }
+        public string ExpiryYear { get; set; }
+        public string NameOnCard { get; set; }
+    }
+}

@@ -27,7 +27,7 @@ else
                 </div>
                 <div class="col-md-4">
                     <button class="btn btn-danger" @onclick="() => RemoveFromCart(item, quantitiesToRemove[item.Id])">Remove from Cart</button>
-                    <button class="btn btn-primary" @onclick="() => OrderItem(item)">Order Item</button>
+                    <button class="btn btn-primary" @onclick="() => OrderItem()">Order Item</button>
                 </div>
             </div>
             <hr />
@@ -38,6 +38,9 @@ else
 @code {
     [Parameter]
     public int UserId { get; set; }
+
+    private bool showOrderForm = false;
+    private CardDetails cardDetails = new CardDetails();
 
     private List<ProductModel> cartItems;
     private Dictionary<int, int> quantitiesToRemove = new Dictionary<int, int>();
@@ -63,14 +66,29 @@ else
         }
     }
 
-    private void OrderItem(ProductModel item)
+    private void OrderItem()
     {
-        OrderStorageService.AddOrder(new OrderModel(item));
+        showOrderForm = true;
     }
 
     private void UpdateQuantityToRemove(ChangeEventArgs e)
     {
         StateHasChanged();
+    }
+
+    private void HandleValidSubmit(ProductModel item)
+    {
+        // Handle the form submission here. For example, you might call a method on the CartStorageService to process the order.
+        showOrderForm = false;
+        OrderStorageService.AddOrder(new OrderModel(item));
+    }
+
+    public class CardDetails
+    {
+        public string CardNumber { get; set; }
+        public string CSC { get; set; }
+        public string ExpiryYear { get; set; }
+        public string NameOnCard { get; set; }
     }
 }
 
