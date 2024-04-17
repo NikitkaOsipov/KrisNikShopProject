@@ -1,4 +1,8 @@
 @page "/card"
+@inject CartStorageService CartStorageService
+@inject OrderStorageService OrderStorageService
+@inject NavigationManager NavigationManager
+@inject UserRegistrationService UserRegistrationService
 
 <div class="modal">
     <div class="modal-content">
@@ -26,14 +30,18 @@
     </div>
 </div>
 
-@code 
-{
+
+@code {
+    private CardDetails cardDetails = new CardDetails();
+
+
     private void HandleValidSubmit()
     {
         
+        NavigationManager.NavigateTo("");
     }
 
-    public class cardDetails
+    public class CardDetails
     {
         public string CardNumber { get; set; }
         public string CSC { get; set; }
