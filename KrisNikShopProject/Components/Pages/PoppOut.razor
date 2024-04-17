@@ -1,0 +1,37 @@
+﻿@page "/poppout"
+@rendermode InteractiveServer
+
+<div class="modal" tabindex="-1" style="display:block">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Card Information</h5>
+            </div>
+            <div class="modal-body">
+                <input type="text" placeholder="Card Number" @bind="CardNumber" />
+                <input type="text" placeholder="Expiration Date" @bind="ExpirationDate" />
+                <!-- Add more fields as needed -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" @onclick="Save">Save</button>
+                <button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    public string CardNumber { get; set; }
+    public string ExpirationDate { get; set; }
+
+    public void Save()
+    {
+        // Save card info
+        // Close the modal
+    }
+
+    public void Cancel()
+    {
+        // Close the modal
+    }
+}

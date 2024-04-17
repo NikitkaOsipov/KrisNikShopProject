@@ -1,4 +1,14 @@
 ﻿@page "/pizzeria"
+@using KrisNikShopProject.Components
+@rendermode InteractiveServer
+
+@if (ShowModal)
+{
+    <CardSubmitPage />
+}
+
+<button class="btn btn-primary" @onclick="OnClick">Enter Card Info</button>
+
 
 <div class="main">
   <h1>Blazing Pizzas</h1>
@@ -20,6 +30,13 @@
 </div>
 
 @code {
+    public bool ShowModal { get; set; }
+
+    public void OnClick()
+    {
+        ShowModal = true;
+        StateHasChanged();
+    }
     List<Pizza> specials = new();
     // https://www.learnblazor.com/dependency-injection
     // https://learn.microsoft.com/en-us/training/modules/interact-with-data-blazor-web-apps/4-access-data-from-blazor-components
@@ -35,4 +52,23 @@
             new Pizza { Name = "Classic pepperoni", BasePrice =  10.5M, Description = "It's the pizza you grew up with, but Blazing hot!", ImageUrl="img/pizzas/pepperoni.jpg" }
         });
     }
+}
+
+.modal {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
 }

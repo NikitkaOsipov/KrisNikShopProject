@@ -11,8 +11,9 @@ namespace KrisNikShopProject.Components.Data
         public DateTime? DateOfCreating { get; }
         public string? PhoneNumber { get; set; }
         public string? CardNumber {get; set;}
-        public string? CardCode {get; set;}
+        public string? CardCVC2 {get; set;}
         public string? CardDate {get; set;}
+        public string? CardNameSurname { get; set;}
 
 		public UserModel()
         {

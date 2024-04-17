@@ -1,51 +1,90 @@
-@page "/card"
-@inject CartStorageService CartStorageService
-@inject OrderStorageService OrderStorageService
-@inject NavigationManager NavigationManager
-@inject UserRegistrationService UserRegistrationService
+@rendermode InteractiveServer
+@inject UserRegistrationService userRegistrationService
 
-<div class="modal">
-    <div class="modal-content">
-        <h2>Enter Card Details</h2>
-        <EditForm Model="cardDetails" OnValidSubmit="HandleValidSubmit">
-            <DataAnnotationsValidator />
-            <div class="form-group">
-                <label for="cardNumber">Card Number:</label>
-                <InputText id="cardNumber" class="form-control" @bind-Value="cardDetails.CardNumber" />
+<div class="modal" tabindex="-1" style="display:block">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Card Information</h5>
             </div>
-            <div class="form-group">
-                <label for="csc">CSC:</label>
-                <InputText id="csc" class="form-control" @bind-Value="cardDetails.CSC" />
+            <div class="modal-body">
+                <EditForm Model="CardInfo" OnValidSubmit="HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <div class="form-group">
+                        <label for="CardNumber">Card Number:</label>
+                        <InputText id="CardNumber" class="form-control" @bind-Value="CardInfo.CardNumber" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="CSC">CSC:</label>
+                        <InputText id="CSC" class="form-control" @bind-Value="CardInfo.CSC" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ExpiryYear">Expiry Year:</label>
+                        <InputText id="ExpiryYear" class="form-control" @bind-Value="CardInfo.ExpiryYear" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="NameSurname">Name Surname:</label>
+                        <InputText id="NameSurname" class="form-control" @bind-Value="CardInfo.NameSurname" />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" @onclick="OnCancel">Cancel</button>
+
+                </EditForm>
             </div>
-            <div class="form-group">
-                <label for="expiryYear">Expiry Year:</label>
-                <InputText id="expiryYear" class="form-control" @bind-Value="cardDetails.ExpiryYear" />
-            </div>
-            <div class="form-group">
-                <label for="nameOnCard">Name on Card:</label>
-                <InputText id="nameOnCard" class="form-control" @bind-Value="cardDetails.NameOnCard" />
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </EditForm>
+        </div>
     </div>
 </div>
 
-
 @code {
-    private CardDetails cardDetails = new CardDetails();
+    public CardInfoModel CardInfo { get; set; } = new CardInfoModel();
+    
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
 
-
-    private void HandleValidSubmit()
+    public void HandleValidSubmit()
     {
-        
-        NavigationManager.NavigateTo("");
+        UserModel userToChange = userRegistrationService.CurrentUser;
+
+        userToChange.CardNumber = CardInfo.CardNumber;
+        userToChange.CardCVC2 = CardInfo.CSC;
+        userToChange.CardDate = CardInfo.ExpiryYear;
+        userToChange.CardNameSurname = CardInfo.NameSurname;
+
+        userRegistrationService.ChangeUserData(userToChange);
     }
 
-    public class CardDetails
+    public class CardInfoModel
     {
         public string CardNumber { get; set; }
         public string CSC { get; set; }
         public string ExpiryYear { get; set; }
-        public string NameOnCard { get; set; }
+        public string NameSurname { get; set; }
     }
 }
+
+<style>
+    .modal {
+		position: fixed;
+		z-index: 1;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: rgba(0,0,0,0.4);
+	}
+
+	.modal-content {
+		background-color: #fefefe;
+		margin: 15% auto;
+		padding: 20px;
+		border: 1px solid #888;
+		width: 80%;
+	}
+</style>
