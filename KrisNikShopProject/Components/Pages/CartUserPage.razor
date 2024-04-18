@@ -29,11 +29,12 @@ else
                     <p>@item.Description</p>
                     <p>Price: @item.Price</p>
                     <p>Quantity: @item.Quantity</p>
-                    <input type="range" min="1" max="@item.Quantity" @bind="quantitiesToRemove[item.Id]" @oninput="UpdateQuantityToRemove" class="slider" />
-                    <span>@quantitiesToRemove[item.Id]</span>
+                    
                 </div>
                 <div class="col-md-4">
                     <button class="btn btn-danger" @onclick="() => RemoveFromCart(item, quantitiesToRemove[item.Id])">Remove from Cart</button>
+                    <input type="range" min="1" max="@item.Quantity" @bind="quantitiesToRemove[item.Id]" @oninput="UpdateQuantityToRemove" class="slider" />
+                    <span>@quantitiesToRemove[item.Id]</span>
                     <button class="btn btn-primary" @onclick="OrderItem">Order Item</button>
                 </div>
             </div>

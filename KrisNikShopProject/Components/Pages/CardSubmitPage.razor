@@ -18,8 +18,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="CSC">CSC:</label>
-                        <InputText id="CSC" class="form-control" @bind-Value="CardInfo.CSC" />
+                        <label for="CVC">CVC:</label>
+                        <InputText id="CVC" class="form-control" @bind-Value="CardInfo.CVC" />
                     </div>
 
                     <div class="form-group">
@@ -52,7 +52,7 @@
         UserModel userToChange = userRegistrationService.CurrentUser;
 
         userToChange.CardNumber = CardInfo.CardNumber;
-        userToChange.CardCVC2 = CardInfo.CSC;
+        userToChange.CardCVC2 = CardInfo.CVC;
         userToChange.CardDate = CardInfo.ExpiryYear;
         userToChange.CardNameSurname = CardInfo.NameSurname;
 
@@ -62,7 +62,7 @@
     public class CardInfoModel
     {
         public string CardNumber { get; set; }
-        public string CSC { get; set; }
+        public string CVC { get; set; }
         public string ExpiryYear { get; set; }
         public string NameSurname { get; set; }
     }

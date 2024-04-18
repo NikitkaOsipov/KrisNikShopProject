@@ -38,7 +38,7 @@
         return users; 
     } 
 
-    public static void ReWrite(TodoItem todo)
+    @* public static void ReWrite(TodoItem todo)
     {
         List<TodoItem> todos = ReadToDo();
         for (int i = 0; i < todos.Count; i++)
@@ -57,7 +57,7 @@
             }
                 
         } 
-    }
+    } *@
 
     void AddTodo() 
         { 
@@ -83,7 +83,7 @@
             set 
             {
                 isDone = value;
-                ReWrite(this);
+                @* ReWrite(this); *@
             }
         }
 
