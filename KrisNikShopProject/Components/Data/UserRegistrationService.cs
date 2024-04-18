@@ -66,7 +66,7 @@ namespace KrisNikShopProject.Components.Data
 					users.Add(new UserModel(Int32.Parse(line[0]), 
                         line[1], line[2], 
                         line[3], line[4],
-                        DateTime.ParseExact(line[5], "MM/dd/yyyy*HH:mm:ss", CultureInfo.InvariantCulture), line[6]));
+                        DateTime.ParseExact(line[5], "MM/dd/yyyy HH:mm:ss", CultureInfo.CreateSpecificCulture("lv-LV")), line[6], line[7], line[8], line[9], line[10]));
 				}
 			}
 

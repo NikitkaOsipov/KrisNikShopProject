@@ -37,7 +37,7 @@
             ArrivelTime = arrivelTime;
         }
 
-        public OrderModel(ProductModel product)
+        public OrderModel(ProductModel product, UserModel user)
         {
             Id = product.Id;
             Name = product.Name;
@@ -50,8 +50,8 @@
             Material = product.Material;
             Image = product.Image;
             Country = product.Country;
-            CardNumber = "2143133535345";
-            NameSurName = "Kris sapog";
+            CardNumber = user.CardNumber;
+            NameSurName = user.CardNameSurname;
             ArrivelTime = 12;
         }
 

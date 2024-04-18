@@ -1,6 +1,7 @@
 ﻿@page "/cart/{userId:int}"
 @inject CartStorageService CartStorageService
 @inject OrderStorageService OrderStorageService
+@inject UserRegistrationService UserRegistrationService
 @using KrisNikShopProject.Components.Pages
 
 @rendermode InteractiveServer
@@ -35,7 +36,7 @@ else
                     <button class="btn btn-danger" @onclick="() => RemoveFromCart(item, quantitiesToRemove[item.Id])">Remove from Cart</button>
                     <input type="range" min="1" max="@item.Quantity" @bind="quantitiesToRemove[item.Id]" @oninput="UpdateQuantityToRemove" class="slider" />
                     <span>@quantitiesToRemove[item.Id]</span>
-                    <button class="btn btn-primary" @onclick="OrderItem">Order Item</button>
+                    <button class="btn btn-primary" @onclick="() => OrderItem(item)">Order Item</button>
                 </div>
             </div>
             <hr />
@@ -75,9 +76,18 @@ else
         }
     }
 
-    private void OrderItem()
+    private void OrderItem(ProductModel product)
     {
-        ShowCardSubmitPage = true;
+        if(UserRegistrationService?.CurrentUser?.CardNumber == null) 
+        {
+            ShowCardSubmitPage = true;
+            StateHasChanged();
+        } 
+        OrderModel order = new OrderModel(product, UserRegistrationService!.CurrentUser!);
+        OrderStorageService.AddOrder(order);
+        RemoveFromCart(product, product.Quantity);
+
+        
     }
 
     private void HideCardSubmitPage()

@@ -1,5 +1,6 @@
-﻿
+﻿using System.Globalization;
 namespace KrisNikShopProject.Components.Data
+
 {
     public class UserModel
     {
@@ -8,7 +9,7 @@ namespace KrisNikShopProject.Components.Data
 		public string? Password { get; set; }
 		public string? Email { get; set; }
         public string? Role { get; set; } = "User";
-        public DateTime? DateOfCreating { get; }
+        public DateTime DateOfCreating { get; }
         public string? PhoneNumber { get; set; }
         public string? CardNumber {get; set;}
         public string? CardCVC2 {get; set;}
@@ -40,10 +41,25 @@ namespace KrisNikShopProject.Components.Data
             Role = role;
             DateOfCreating = DateTime.Now;
         }
-
-        public override string ToString()
+        public UserModel(int id, string name, string password, string email, string role, DateTime dateOfCreating, string phoneNumber, string cardNumber, string cardCVC2, string cardDate, string cardNameSurname)
         {
-			return  Id + "," + Name + "," + Password + "," + Email + "," + Role + "," + DateOfCreating + "," + (PhoneNumber ?? "Unknown");	
+            Id = id;
+            Name = name;
+            Password = password;
+            Email = email;
+            Role = role;
+            DateOfCreating = dateOfCreating;
+            PhoneNumber = phoneNumber;
+            CardNumber = cardNumber;
+            CardCVC2 = cardCVC2;
+            CardDate = cardDate;
+            CardNameSurname = cardNameSurname;
+        }
+        
+
+        public override string ToString() //kristian LOOOOOOHHHHH
+        {
+			return  Id + "," + Name + "," + Password + "," + Email + "," + Role + "," + DateOfCreating.ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.CreateSpecificCulture("lv-LV")) + "," + (PhoneNumber ?? "Unknown") + ", " + (CardNumber ?? "Unknown") + "," + (CardCVC2 ?? "Unknown") + "," + (CardDate ?? "Unknown") + ", " + (CardNameSurname ?? "Unknown");	
 		}
     }
 }
