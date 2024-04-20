@@ -33,7 +33,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary" @onclick="HandleValidSubmit">Submit</button>
-                    <button type="button" class="btn btn-secondary" @onclick="OnCancel">Cancel</button>
+                    <button type="button" class="btn btn-secondary" @onclick="() => OnCancel.InvokeAsync(false)">Cancel</button>
 
                 </EditForm>
             </div>
@@ -45,20 +45,29 @@
     public CardInfoModel CardInfo { get; set; } = new CardInfoModel();
     
     [Parameter]
-    public EventCallback OnCancel { get; set; }
+    public EventCallback<bool> OnCancel { get; set; }
+
+    [Parameter]
+    public TaskCompletionSource<bool> Tcs { get; set; }
+
 
     public void HandleValidSubmit()
     {
         UserModel userToChange = userRegistrationService.CurrentUser;
 
-        userToChange.CardNumber = CardInfo.CardNumber;
-        userToChange.CardCVC2 = CardInfo.CVC;
-        userToChange.CardDate = CardInfo.ExpiryYear;
-        userToChange.CardNameSurname = CardInfo.NameSurname;
+        userToChange.CardNumber = CardInfo.CardNumber.Trim();
+        userToChange.CardCVC2 = CardInfo.CVC.Trim();
+        userToChange.CardDate = CardInfo.ExpiryYear.Trim();
+        userToChange.CardNameSurname = CardInfo.NameSurname.Trim();
 
 
         userRegistrationService.ChangeUserData(userToChange);
-        OnCancel.InvokeAsync();
+        OnCancel.InvokeAsync(true);
+
+        if (Tcs != null && !Tcs.Task.IsCompleted)
+        {
+            Tcs.SetResult(true);
+        }
     }
 
 

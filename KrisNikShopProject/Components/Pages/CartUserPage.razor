@@ -9,7 +9,7 @@
 
 @if (ShowCardSubmitPage)
 {
-    <CardSubmitPage OnCancel="HideCardSubmitPage" />
+    <CardSubmitPage OnCancel="HideCardSubmitPage" Tcs="tcs" />
 }
 
 @if (cartItems == null)
@@ -52,6 +52,8 @@ else
 
     private CardDetails cardDetails = new CardDetails();
 
+    private TaskCompletionSource<bool> tcs = null;
+
     private List<ProductModel> cartItems;
     private Dictionary<int, int> quantitiesToRemove = new Dictionary<int, int>();
 
@@ -76,12 +78,14 @@ else
         }
     }
 
-    private void OrderItem(ProductModel product)
+    private async void OrderItem(ProductModel product)
     {
         if(UserRegistrationService?.CurrentUser?.CardNumber == null) 
         {
+            tcs = new TaskCompletionSource<bool>();
             ShowCardSubmitPage = true;
             StateHasChanged();
+            await tcs.Task;
         } 
         OrderModel order = new OrderModel(product, UserRegistrationService!.CurrentUser!);
         OrderStorageService.AddOrder(order);
@@ -90,9 +94,13 @@ else
         
     }
 
-    private void HideCardSubmitPage()
+    private void HideCardSubmitPage(bool isCardSubmissionSuccessful = false)
     {
         ShowCardSubmitPage = false;
+        if (isCardSubmissionSuccessful && tcs != null && !tcs.Task.IsCompleted)
+        {
+            tcs.SetResult(true);
+        }
     }
 
     private void UpdateQuantityToRemove(ChangeEventArgs e)

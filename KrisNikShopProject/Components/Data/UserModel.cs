@@ -29,7 +29,7 @@ namespace KrisNikShopProject.Components.Data
             Email = email;
             Role = role;
             DateOfCreating = dateOfCreating;
-            PhoneNumber = phoneNumber;
+            PhoneNumber = (phoneNumber == "Unknown") ? null : phoneNumber;
         }
 
         public UserModel(int id, string name, string password, string email, string role)
@@ -49,17 +49,17 @@ namespace KrisNikShopProject.Components.Data
             Email = email;
             Role = role;
             DateOfCreating = dateOfCreating;
-            PhoneNumber = phoneNumber;
-            CardNumber = cardNumber;
-            CardCVC2 = cardCVC2;
-            CardDate = cardDate;
-            CardNameSurname = cardNameSurname;
+            PhoneNumber = (phoneNumber.Trim() == "Unknown") ? null : phoneNumber.Trim();
+            CardNumber = (cardNumber.Trim() == "Unknown") ? null : cardNumber.Trim();
+            CardCVC2 = (cardCVC2.Trim() == "Unknown") ? null : cardCVC2.Trim();
+            CardDate = (cardDate.Trim() == "Unknown") ? null : cardDate.Trim();
+            CardNameSurname = (cardNameSurname.Trim() == "Unknown") ? null : cardNameSurname.Trim();
         }
         
 
         public override string ToString() //kristian LOOOOOOHHHHH
         {
-			return  Id + "," + Name + "," + Password + "," + Email + "," + Role + "," + DateOfCreating.ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.CreateSpecificCulture("lv-LV")) + "," + (PhoneNumber ?? "Unknown") + ", " + (CardNumber ?? "Unknown") + "," + (CardCVC2 ?? "Unknown") + "," + (CardDate ?? "Unknown") + ", " + (CardNameSurname ?? "Unknown");	
+			return  Id + "," + Name + "," + Password + "," + Email + "," + Role + "," + DateOfCreating.ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.CreateSpecificCulture("lv-LV")) + "," + (PhoneNumber?.Trim() ?? "Unknown") + "," + (CardNumber?.Trim() ?? "Unknown") + "," + (CardCVC2?.Trim() ?? "Unknown") + "," + (CardDate?.Trim() ?? "Unknown") + "," + (CardNameSurname?.Trim() ?? "Unknown");	
 		}
     }
 }
