@@ -18,6 +18,16 @@
 }
 else
 {
+    if (cartItems.Count != 0)
+	{
+        <button class="btn btn-primary" @onclick="OrderSelectedItems">Order Selected Items</button>
+        <button class="btn btn-primary" @onclick="OrderAllItems">Order All Items</button>
+    }
+    else
+    {
+        <p><em>Your cart is empty</em></p>
+    }
+
     <ul>
         @foreach (var item in cartItems)
         {
@@ -33,6 +43,10 @@ else
                     
                 </div>
                 <div class="col-md-4">
+                    <label class="checkbox-label">
+                        <input type="checkbox" @bind="selectedItems[item.Id]" />
+                        <span>Select for ordering</span>
+                    </label>
                     <button class="btn btn-danger" @onclick="() => RemoveFromCart(item, quantitiesToRemove[item.Id])">Remove from Cart</button>
                     <input type="range" min="1" max="@item.Quantity" @bind="quantitiesToRemove[item.Id]" @oninput="UpdateQuantityToRemove" class="slider" />
                     <span>@quantitiesToRemove[item.Id]</span>
@@ -42,7 +56,9 @@ else
             <hr />
         }
     </ul>
+    
 }
+
 
 @code {
     [Parameter]
@@ -56,6 +72,8 @@ else
 
     private List<ProductModel> cartItems;
     private Dictionary<int, int> quantitiesToRemove = new Dictionary<int, int>();
+    private Dictionary<int, bool> selectedItems = new Dictionary<int, bool>();
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -63,6 +81,7 @@ else
         foreach (var item in cartItems)
         {
             quantitiesToRemove[item.Id] = 1;
+            selectedItems[item.Id] = false;
         }
     }
 
@@ -90,8 +109,25 @@ else
         OrderModel order = new OrderModel(product, UserRegistrationService!.CurrentUser!);
         OrderStorageService.AddOrder(order);
         RemoveFromCart(product, product.Quantity);
+    }
 
-        
+    private void OrderSelectedItems()
+    {
+        foreach (var item in cartItems)
+        {
+            if (selectedItems[item.Id])
+            {
+                OrderItem(item);
+            }
+        }
+    }
+
+    private void OrderAllItems()
+    {
+        foreach (var item in cartItems)
+        {
+            OrderItem(item);
+        }
     }
 
     private void HideCardSubmitPage(bool isCardSubmissionSuccessful = false)
@@ -186,8 +222,17 @@ else
         cursor: pointer;
     }
 
-        .btn-primary:hover {
-            background-color: #006494;
-            color: white;
-        }
+    .btn-primary:hover {
+        background-color: #006494;
+        color: white;
+    }
+
+    .checkbox-label {
+        display: flex;
+        align-items: center;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+        margin-right: 10px;
+    }
 </style>

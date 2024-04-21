@@ -1,0 +1,51 @@
+﻿@page "/orders/{userId:int}"
+@inject OrderStorageService OrderStorageService
+@using KrisNikShopProject.Components.Pages
+
+@rendermode InteractiveServer
+<h3>OrderUserPage</h3>
+
+@if (orderItems == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <ul>
+        @foreach (var item in orderItems)
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="@item.Image" alt="@item.Name" class="img-fluid" />
+                </div>
+                <div class="col-md-4">
+                    <h5>@item.Name</h5>
+                    <p>@item.Description</p>
+                    <p>Price: @item.Price</p>
+                    <p>Quantity: @item.Quantity</p>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-primary" @onclick="() => ShowOrderDetails(item)">Details</button>
+                </div>
+            </div>
+            <hr />
+        }
+    </ul>
+}
+
+@code {
+    [Parameter]
+    public int UserId { get; set; }
+
+    private List<OrderModel>? orderItems;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //orderItems = await Task.Run(() => OrderStorageService.GetAllOrders());
+    }
+
+    private void ShowOrderDetails(OrderModel order)
+    {
+        // Implement the logic to show order details
+    }
+}
