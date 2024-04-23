@@ -3,6 +3,7 @@
     public class OrderModel
     {
         public int Id { get; set; }
+        public int ProductID { get; set; }
         public int Quantity { get; set; } = 1;
         public double Price { get; set; }
         public string? Name { get; set; }
@@ -15,15 +16,16 @@
         public string? Image { get; set; }
         public string? CardNumber {get; set;}
         public string? NameSurName {get; set;}
-        public int? ArrivelTime { get; set; }
+        public int? TravelTime { get; set; }
 
         public OrderModel()
         {
         }
 
-        public OrderModel(int id, string name, string description, double price, int quantity, string category, string brand, string size, string material, string country, int arrivelTime, string image)
+        public OrderModel(int id, int productID, string name, string description, double price, int quantity, string category, string brand, string size, string material, string country, int travelTime, string image)
         {
             Id = id;
+            ProductID = productID;
             Name = name;
             Description = description;
             Price = price;
@@ -34,12 +36,12 @@
             Material = material;
             Image = image;
             Country = country;
-            ArrivelTime = arrivelTime;
+            TravelTime = travelTime;
         }
 
         public OrderModel(ProductModel product, UserModel user)
         {
-            Id = product.Id;
+            ProductID = product.Id;
             Name = product.Name;
             Description = product.Description;
             Price = product.Price;
@@ -52,7 +54,7 @@
             Country = product.Country;
             CardNumber = user.CardNumber;
             NameSurName = user.CardNameSurname;
-            ArrivelTime = 12;
+            TravelTime = 12;
         }
 
         public override string ToString()

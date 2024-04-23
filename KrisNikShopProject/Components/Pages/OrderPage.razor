@@ -1,4 +1,4 @@
-﻿@page "/orders/{userId:int}"
+@page "/orders/{userId:int}"
 @inject OrderStorageService OrderStorageService
 @using KrisNikShopProject.Components.Pages
 
@@ -41,7 +41,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        //orderItems = await Task.Run(() => OrderStorageService.GetAllOrders());
+        orderItems = await Task.Run(() => OrderStorageService.GetAllOrders());
     }
 
     private void ShowOrderDetails(OrderModel order)
@@ -49,3 +49,33 @@ else
         // Implement the logic to show order details
     }
 }
+
+<style>
+    .order-list {
+    padding: 10px;
+}
+.order-item {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 5px;
+}
+.order-img {
+    max-height: 100px;
+    object-fit: contain;
+}
+.order-name {
+    font-weight: bold;
+    margin-top: 5px;
+    font-size: 0.9em;
+}
+.order-description {
+    margin-top: 5px;
+    font-size: 0.8em;
+}
+.order-price {
+    margin-top: 5px;
+    color: #f00;
+    font-size: 0.8em;
+}
+</style>

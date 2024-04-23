@@ -26,6 +26,9 @@ namespace KrisNikShopProject.Components.Data
             {
                 string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService.CurrentUser.Id}_orders.csv");
 
+                int? maxId = GetAllOrders().Max(order => order.Id); // ERRRORORORORO
+                product.Id = maxId.GetValueOrDefault() + 1;
+
                 if (!File.Exists(fileName))
                 {
                     File.Create(fileName).Close();
@@ -85,30 +88,28 @@ namespace KrisNikShopProject.Components.Data
         // }
 
 
-        // public List<OrderModel> GetAllProducts()
-        // {
-        //     // Need to count the quantity of items that have the same id
+        public List<OrderModel> GetAllOrders()
+        {
+            // Need to count the quantity of items that have the same id
 
-        //     List<OrderModel> products = new List<OrderModel>();
+            List<OrderModel> orders = new List<OrderModel>();
 
-        //     string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService?.CurrentUser?.Id ?? 0}_orders.csv");
+            string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService?.CurrentUser?.Id ?? 0}_orders.csv");
 
-        //     if (File.Exists(fileName))
-        //     {
-        //         using (var reader = new StreamReader(fileName))
-        //         {
-        //             string? line;
-        //             while ((line = reader.ReadLine()) != null)
-        //             {
-        //                 string[] parts = line.Split(',');
-        //                 ProductModel? product = productStorageService.GetProductById(int.Parse(parts[0]));
-        //                 product!.Quantity = int.Parse(parts[1]);
-        //                 products.Add(product);
-        //             }
-        //         }
-        //     }
+            if (File.Exists(fileName))
+            {
+                using (var reader = new StreamReader(fileName))
+                {
+                    string? line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        OrderModel? order = JsonConvert.DeserializeObject<OrderModel>(line);
+                        orders.Add(order!);
+                    }
+                }
+            }
 
-        //     return products;
-        // }
+            return orders;
+        }
     }
 }

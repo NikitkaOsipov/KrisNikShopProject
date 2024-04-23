@@ -1,0 +1,49 @@
+@page "/orderdetail/{Id}"
+@inject OrderStorageService OrderStorageService
+
+
+@* 
+@if (order == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="order-detail">
+        <h2 class="order-title">Order Details</h2>
+        <p><strong>Order ID:</strong> @order.Id</p>
+        <p><strong>Customer Name:</strong> @order.CustomerName</p>
+        <p><strong>Order Date:</strong> @order.OrderDate</p>
+        <p><strong>Total Price:</strong> @order.TotalPrice</p>
+        <!-- Add more fields as needed -->
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    private OrderModel order;
+
+    protected override async Task OnInitializedAsync()
+    {
+        order = await OrderStorageService.GetOrderById(int.Parse(Id));
+    }
+}
+
+<style>
+    .order-detail {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    .order-title {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .order-detail p {
+        margin-bottom: 10px;
+    }
+</style> *@
