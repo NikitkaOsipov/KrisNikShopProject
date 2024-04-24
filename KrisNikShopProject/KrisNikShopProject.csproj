@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Components\Collections\UsersOrders\" />
     <Folder Include="Components\Collections\UsersCarts\" />
   </ItemGroup>
 
@@ -29,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Components\Pages\OrderUserPage.razor" />
     <None Include="Components\Pages\PoppOut.razor" />
   </ItemGroup>
 

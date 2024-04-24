@@ -1,5 +1,7 @@
 @page "/orders/{userId:int}"
 @inject OrderStorageService OrderStorageService
+@inject UserRegistrationService UserRegistrationService
+@inject NavigationManager NavigationManager
 @using KrisNikShopProject.Components.Pages
 
 @rendermode InteractiveServer
@@ -46,7 +48,7 @@ else
 
     private void ShowOrderDetails(OrderModel order)
     {
-        // Implement the logic to show order details
+        NavigationManager.NavigateTo($"/orderdetail/{order.Id}/{UserRegistrationService.CurrentUser.Email}");
     }
 }
 

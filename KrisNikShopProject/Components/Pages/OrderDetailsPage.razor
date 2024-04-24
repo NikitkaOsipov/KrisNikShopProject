@@ -1,8 +1,8 @@
-@page "/orderdetail/{Id}"
+@page "/orderdetail/{Id}/{UserEmail}"
 @inject OrderStorageService OrderStorageService
+@inject UserRegistrationService UserRegistrationService
 
 
-@* 
 @if (order == null)
 {
     <p><em>Loading...</em></p>
@@ -12,10 +12,18 @@ else
     <div class="order-detail">
         <h2 class="order-title">Order Details</h2>
         <p><strong>Order ID:</strong> @order.Id</p>
-        <p><strong>Customer Name:</strong> @order.CustomerName</p>
-        <p><strong>Order Date:</strong> @order.OrderDate</p>
-        <p><strong>Total Price:</strong> @order.TotalPrice</p>
-        <!-- Add more fields as needed -->
+        <p><strong>Product ID:</strong> @order.ProductID</p>
+        <p><strong>Quantity:</strong> @order.Quantity</p>
+        <p><strong>Price:</strong> @order.Price</p>
+        <p><strong>Name:</strong> @order.Name</p>
+        <p><strong>Description:</strong> @order.Description</p>
+        <p><strong>Category:</strong> @order.Category</p>
+        <p><strong>Brand:</strong> @order.Brand</p>
+        <p><strong>Size:</strong> @order.Size</p>
+        <p><strong>Material:</strong> @order.Material</p>
+        <p><strong>Country:</strong> @order.Country</p>
+        <p><strong>Image:</strong> <img src="@order.Image" alt="@order.Name" /></p>
+        <p><strong>Travel Time:</strong> @order.TravelTime</p>
     </div>
 }
 
@@ -23,13 +31,21 @@ else
     [Parameter]
     public string Id { get; set; }
 
-    private OrderModel order;
+    [Parameter]
+    public string UserEmail { get; set; }
 
+    private OrderModel order;
+    private UserModel user;
     protected override async Task OnInitializedAsync()
     {
-        order = await OrderStorageService.GetOrderById(int.Parse(Id));
+        // Task[] tasks = new Task[2];
+
+        // tasks[0] = Task.Run(() => order = OrderStorageService.GetOrder(int.Parse(Id)));
+        // tasks[1] = Task.Run(() => user = UserRegistrationService.GetUserEmail(UserEmail));
+        await Task.Run(() => user = UserRegistrationService.GetUserEmail(UserEmail));
+        await Task.Run(() => order = OrderStorageService.GetOrder(int.Parse(Id), user));
     }
-}
+ }
 
 <style>
     .order-detail {
@@ -38,12 +54,22 @@ else
         padding: 20px;
         border: 1px solid #ddd;
         border-radius: 5px;
+        background-color: #f9f9f9;
     }
+
     .order-title {
         text-align: center;
         margin-bottom: 20px;
+        color: #333;
     }
+
     .order-detail p {
         margin-bottom: 10px;
+        color: #666;
     }
-</style> *@
+
+    .order-detail img {
+        max-width: 100%;
+        height: auto;
+    }
+</style>

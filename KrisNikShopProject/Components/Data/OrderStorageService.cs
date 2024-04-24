@@ -26,12 +26,17 @@ namespace KrisNikShopProject.Components.Data
             {
                 string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService.CurrentUser.Id}_orders.csv");
 
-                int? maxId = GetAllOrders().Max(order => order.Id); // ERRRORORORORO
-                product.Id = maxId.GetValueOrDefault() + 1;
 
                 if (!File.Exists(fileName))
                 {
                     File.Create(fileName).Close();
+                    product.Id =  1;
+                }
+                else
+                {
+                    int? maxId = GetAllOrders().Max(order => order.Id); // ERRRORORORORO
+                    product.Id = maxId.GetValueOrDefault() + 1;
+                    
                 }
 
                 string info = JsonConvert.SerializeObject(product);
@@ -110,6 +115,36 @@ namespace KrisNikShopProject.Components.Data
             }
 
             return orders;
+        }
+
+        public List<OrderModel> GetAllOrders(UserModel user)
+        {
+            // Need to count the quantity of items that have the same id
+
+            List<OrderModel> orders = new List<OrderModel>();
+
+            string fileName = Path.Combine(FILE_PATH, $"{user.Id}_orders.csv");
+
+            if (File.Exists(fileName))
+            {
+                using (var reader = new StreamReader(fileName))
+                {
+                    string? line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        OrderModel? order = JsonConvert.DeserializeObject<OrderModel>(line);
+                        orders.Add(order!);
+                    }
+                }
+            }
+
+            return orders;
+        }
+
+        public OrderModel? GetOrder(int? ID, UserModel user)
+        {
+            List<OrderModel> orders = GetAllOrders(user);
+            return orders.FirstOrDefault(order => order.Id == ID);
         }
     }
 }
