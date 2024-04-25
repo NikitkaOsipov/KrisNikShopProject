@@ -62,5 +62,6 @@ else
     {
         cartStorageService.AddProduct(product, CurrentValue);
         isAddedToCart = true;
+        userRegistrationService.SignInUser(userRegistrationService.CurrentUser);
     }
 }
