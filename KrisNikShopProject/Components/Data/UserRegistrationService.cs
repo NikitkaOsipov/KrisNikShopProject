@@ -108,6 +108,20 @@ namespace KrisNikShopProject.Components.Data
             return resultUser;
         }
 
+        public UserModel? GetUserById(int id)
+        {   
+            UserModel? resultUser = null;
+            List<UserModel> users = GetAllUsers();
+            foreach(UserModel user in users)
+            {
+                if (id == user.Id)
+                {
+                    resultUser = user;
+                }
+            }
+            return resultUser;
+        }
+
         public void ChangeUserData(UserModel changeDataUser)
         {
             List<UserModel> users = GetAllUsers();

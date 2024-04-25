@@ -25,7 +25,9 @@ else
                 <th>Role</th>
                 <th>Creation date</th>
                 <th>Phone num</th>
-                <th>Edit</th>
+                <th>Edit Profile</th>
+                <th>Edit Cart</th>
+                <th>Edit Orders</th>
             </tr>
         </thead>
         <tbody>
@@ -38,7 +40,9 @@ else
                     <td>@user.Role</td>
                     <td>@user.DateOfCreating</td>
                     <td>@user.PhoneNumber</td>
-                    <td><button @onclick="(() => EditUser(user.Email))">Edit</button></td> <!-- New cell with the edit button -->
+                    <td><button @onclick="(() => EditUser(user.Email))">Edit Profile</button></td>
+                    <td><button @onclick="(() => EditOrders(user.Id))">Edit Orders</button></td>
+                    <td><button @onclick="(() => EditCart(user.Id))">Edit Cart</button></td>
                 </tr>
             }
         </tbody>
@@ -58,5 +62,15 @@ else
     private void EditUser(string email)
     {
         NavigationManager.NavigateTo($"/editprofile/{email}");
+    }
+
+    private void EditCart(int? id)
+    {
+        NavigationManager.NavigateTo($"/cart/{id}");
+    }
+
+    private void EditOrders(int? id)
+    {
+        NavigationManager.NavigateTo($"/orders/{id}");
     }
 }

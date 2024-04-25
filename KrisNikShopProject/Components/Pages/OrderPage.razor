@@ -1,11 +1,11 @@
-@page "/orders/{userId:int}"
+@page "/orders/{UserId:int}"
 @inject OrderStorageService OrderStorageService
 @inject UserRegistrationService UserRegistrationService
 @inject NavigationManager NavigationManager
 @using KrisNikShopProject.Components.Pages
 
 @rendermode InteractiveServer
-<h3>OrderUserPage</h3>
+
 
 @if (orderItems == null)
 {
@@ -13,6 +13,7 @@
 }
 else
 {
+    <h3>@User.Name</h3>
     <ul>
         @foreach (var item in orderItems)
         {
@@ -38,17 +39,19 @@ else
 @code {
     [Parameter]
     public int UserId { get; set; }
+    public UserModel? User { get; set; }
 
     private List<OrderModel>? orderItems;
 
     protected override async Task OnInitializedAsync()
     {
-        orderItems = await Task.Run(() => OrderStorageService.GetAllOrders());
+        await Task.Run(() => User = UserRegistrationService.GetUserById(UserId));
+        await Task.Run(() => orderItems = OrderStorageService.GetAllOrders(User));
     }
 
     private void ShowOrderDetails(OrderModel order)
     {
-        NavigationManager.NavigateTo($"/orderdetail/{order.Id}/{UserRegistrationService.CurrentUser.Email}");
+        NavigationManager.NavigateTo($"/orderdetail/{order.Id}/{User.Id}");
     }
 }
 

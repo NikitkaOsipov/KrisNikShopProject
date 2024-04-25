@@ -14,15 +14,17 @@
         public string? Material { get; set; }
         public string? Country { get; set; }
         public string? Image { get; set; }
-        public string? CardNumber {get; set;}
-        public string? NameSurName {get; set;}
-        public int? TravelTime { get; set; }
+        public string? CardNumber { get; set; }
+        public string? NameSurName { get; set; }
+        public TimeSpan TravelTime { get; set; }
+        public DateTime DateOfOrder { get; set; }
+        public DateTime DateOfArrival { get; set; }
 
         public OrderModel()
         {
         }
 
-        public OrderModel(int id, int productID, string name, string description, double price, int quantity, string category, string brand, string size, string material, string country, int travelTime, string image)
+        public OrderModel(int id, int productID, string name, string description, double price, int quantity, string category, string brand, string size, string material, string country, TimeSpan travelTime, DateTime dateOfArrival, DateTime dateofOrder, string image)
         {
             Id = id;
             ProductID = productID;
@@ -37,6 +39,8 @@
             Image = image;
             Country = country;
             TravelTime = travelTime;
+            DateOfOrder = dateofOrder;
+            DateOfArrival = dateOfArrival;
         }
 
         public OrderModel(ProductModel product, UserModel user)
@@ -54,7 +58,9 @@
             Country = product.Country;
             CardNumber = user.CardNumber;
             NameSurName = user.CardNameSurname;
-            TravelTime = 12;
+            TravelTime = new TimeSpan();
+            DateOfOrder = DateTime.Now;
+            DateOfArrival = DateOfOrder.Add(TravelTime);
         }
 
         public override string ToString()

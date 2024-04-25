@@ -119,5 +119,31 @@
 
             return products;
         }
+
+        public List<ProductModel> GetAllProducts(UserModel user)
+        {
+            // Need to count the quantity of items that have the same id
+            
+            List<ProductModel> products = new List<ProductModel>();
+
+             string fileName = Path.Combine(FILE_PATH, $"{user.Id ?? 0}_cart.csv");
+
+            if (File.Exists(fileName))
+            {
+                using (var reader = new StreamReader(fileName))
+                {
+                    string? line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] parts = line.Split(',');
+                        ProductModel? product = productStorageService.GetProductById(int.Parse(parts[0]));
+                        product!.Quantity = int.Parse(parts[1]);
+                        products.Add(product);
+                    }
+                }
+            }
+
+            return products;
+        }
     }
 }
