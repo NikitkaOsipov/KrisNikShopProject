@@ -39,7 +39,7 @@ else
                     <h5>@item.Name</h5>
                     <p>@item.Description</p>
                     <p>Price: @item.Price</p>
-                    <p>Quantity: @item.Quantity</p>
+                     <p>Quantity: @item.Quantity</p> @* ERROR IDK WHY PLZ HELP NIKITA *@
                     
                 </div>
                 <div class="col-md-4">
@@ -47,10 +47,14 @@ else
                         <input type="checkbox" @bind="selectedItems[item.Id]" />
                         <span>Select for ordering</span>
                     </label>
-                    <button class="btn btn-danger" @onclick="() => RemoveFromCart(item, quantitiesToRemove[item.Id])">Remove from Cart</button>
-                    <input type="range" min="1" max="@item.Quantity" @bind="quantitiesToRemove[item.Id]" @oninput="UpdateQuantityToRemove" class="slider" />
-                    <span>@quantitiesToRemove[item.Id]</span>
-                    <button class="btn btn-primary" @onclick="() => OrderItem(item)">Order Item</button>
+                    @if (User.Id == UserRegistrationService.CurrentUser.Id) 
+                    {
+                        <input type="range" min="1" max="@item.Quantity" @bind="quantitiesToRemove[item.Id]" @oninput="UpdateQuantityToRemove" class="slider" />
+                        <button class="btn btn-danger" @onclick="() => RemoveFromCart(item, quantitiesToRemove[item.Id])">Remove from Cart</button>
+                        <span>@quantitiesToRemove[item.Id]</span>
+                        <button class="btn btn-primary" @onclick="() => OrderItem(item)">Order Item</button>
+                    }
+                    
                 </div>
             </div>
             <hr />
