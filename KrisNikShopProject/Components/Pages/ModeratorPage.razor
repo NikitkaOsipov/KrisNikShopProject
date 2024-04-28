@@ -41,8 +41,8 @@ else
                     <td>@user.DateOfCreating</td>
                     <td>@user.PhoneNumber</td>
                     <td><button @onclick="(() => EditUser(user.Email))">Edit Profile</button></td>
-                    <td><button @onclick="(() => EditOrders(user.Id))">Edit Orders</button></td>
                     <td><button @onclick="(() => EditCart(user.Id))">Edit Cart</button></td>
+                    <td><button @onclick="(() => EditOrders(user.Id))">Edit Orders</button></td>
                 </tr>
             }
         </tbody>

@@ -1,13 +1,23 @@
 ﻿using System.Globalization;
+using System.ComponentModel.DataAnnotations;
 namespace KrisNikShopProject.Components.Data
 
 {
     public class UserModel
     {
         public int? Id { get; set; }
-        public string? Name { get; set; }
-		public string? Password { get; set; }
-		public string? Email { get; set; }
+
+        [Required(ErrorMessage = "Name is required")]
+        [MinLength(3, ErrorMessage = "Name must be at least 3 characters long")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "Password is required")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", ErrorMessage = "Password must contain 8-15 letters, 1 special character, 1 number, and 1 uppercase letter")]
+        public string Password { get; set; }
+
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+		public string Email { get; set; }
         public string? Role { get; set; } = "User";
         public DateTime DateOfCreating { get; }
         public string? PhoneNumber { get; set; }

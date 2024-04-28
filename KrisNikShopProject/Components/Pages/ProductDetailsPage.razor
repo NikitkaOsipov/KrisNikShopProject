@@ -22,8 +22,11 @@ else
         } else
         {
             <button class="btn btn-primary" @onclick="AddToCart">Add to Cart</button>
-            <input type="range" min="@MinValue" max="@MaxValue" @bind="CurrentValue" @oninput="ValueChanged" />
-            <p>@CurrentValue</p>
+            <div class="quantity-control">
+                <p>Quantity:</p>
+                <input type="range" min="@MinValue" max="@MaxValue" @bind="CurrentValue" @oninput="ValueChanged" />
+                <InputNumber class="quantity-input" @bind-Value="CurrentValue" min="@MinValue" max="@MaxValue" />
+            </div>
             @if (isAddedToCart)
             {
                 <p>Product was added to cart.</p>
@@ -65,3 +68,16 @@ else
         userRegistrationService.SignInUser(userRegistrationService.CurrentUser);
     }
 }
+
+<style>
+    .quantity-control {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .quantity-input {
+        width: 50px;
+    }
+</style>

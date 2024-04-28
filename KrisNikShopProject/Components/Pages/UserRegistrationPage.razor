@@ -4,12 +4,36 @@
 
 
 <h3>UserRegistration</h3>
+<EditForm Model="UserModel" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="name"><b>Name</b></label>
+        <InputText id="name" @bind-Value="UserModel.Name"/>
+        <ValidationMessage For="@(()=> UserModel.Name)" />
+    </div>
 
+    <div class="form-group">
+        <label for="email"><b>Email</b></label>
+        <InputText id="email" @bind-Value="UserModel.Email" />
+        <ValidationMessage For="@(()=> UserModel.Email)" />
+    </div>
 
-<form @onsubmit="HandleSubmit">
+    <div class="form-group">
+        <label for="password"><b>Password</b></label>
+        <InputText type="password" id="password" @bind-Value="UserModel.Password" />
+        <ValidationMessage For="@(()=> UserModel.Password)" />
+    </div>
+
+    <button type="submit" class="registerbtn">Register</button>
+</EditForm>
+@* 
+<EditForm Model="UserModel" OnValidSubmit="HandleSubmit">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
 	<div class="form-group">
 		<label for="name"><b>Name</b></label>
-		<input type="text" id="name" @bind="UserModel.Name" required />
+		<InputText id="name" @bind-Value="UserModel.Name"/>
+		<ValidationMessage For="@(()=> UserModel.Name)" />
 	</div>
 
 	<div class="form-group">
@@ -23,7 +47,7 @@
 	</div>
 
 	<button type="submit" class="registerbtn">Register</button>
-</form>
+</EditForm> *@
 
 <div class="container signin">
 	<p>Already have an account? <a href="/sign-in">Sign in</a>.</p>

@@ -32,7 +32,7 @@ else
     public string OrderId { get; set; }
 
     [Parameter]
-    public int UserId { get; set; }
+    public string UserId { get; set; }
 
     private OrderModel order;
     private UserModel user;
@@ -42,7 +42,7 @@ else
 
         // tasks[0] = Task.Run(() => order = OrderStorageService.GetOrder(int.Parse(Id)));
         // tasks[1] = Task.Run(() => user = UserRegistrationService.GetUserEmail(UserEmail));
-        await Task.Run(() => user = UserRegistrationService.GetUserById(UserId));
+        await Task.Run(() => user = UserRegistrationService.GetUserById(int.Parse(UserId)));
         await Task.Run(() => order = OrderStorageService.GetOrder(int.Parse(OrderId), user));
     }
  }

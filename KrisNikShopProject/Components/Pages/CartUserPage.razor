@@ -17,8 +17,8 @@
 }
 else
 {
-    <h3>@User.Name</h3>
-    if (cartItems.Count != 0)
+    <h1>@User.Name's CART</h1>
+    if (cartItems.Count != 0 && User.Id == UserRegistrationService.CurrentUser.Id)
 	{
         <button class="btn btn-primary" @onclick="OrderSelectedItems">Order Selected Items</button>
         <button class="btn btn-primary" @onclick="OrderAllItems">Order All Items</button>
@@ -42,6 +42,7 @@ else
                      <p>Quantity: @item.Quantity</p> @* ERROR IDK WHY PLZ HELP NIKITA *@
                     
                 </div>
+
                 <div class="col-md-4">
                     <label class="checkbox-label">
                         <input type="checkbox" @bind="selectedItems[item.Id]" />
@@ -49,12 +50,16 @@ else
                     </label>
                     @if (User.Id == UserRegistrationService.CurrentUser.Id) 
                     {
-                        <input type="range" min="1" max="@item.Quantity" @bind="quantitiesToRemove[item.Id]" @oninput="UpdateQuantityToRemove" class="slider" />
-                        <button class="btn btn-danger" @onclick="() => RemoveFromCart(item, quantitiesToRemove[item.Id])">Remove from Cart</button>
-                        <span>@quantitiesToRemove[item.Id]</span>
                         <button class="btn btn-primary" @onclick="() => OrderItem(item)">Order Item</button>
                     }
-                    
+
+                    <div>
+                    <button class="btn btn-danger" @onclick="() => RemoveFromCart(item, quantitiesToRemove[item.Id])">Remove from Cart: @quantitiesToRemove[item.Id]</button>
+                    @if (item.Quantity > 1)
+                    {
+                        <input type="range" min="1" max="@item.Quantity" @bind="quantitiesToRemove[item.Id]" @oninput="UpdateQuantityToRemove" class="slider" />
+                    }
+                    </div>
                 </div>
             </div>
             <hr />
