@@ -1,7 +1,7 @@
 ﻿@page "/regist"
 @rendermode InteractiveServer
 @inject UserRegistrationService UserRegistrationService
-
+@inject NavigationManager NavigationManager
 
 <h3>UserRegistration</h3>
 <EditForm Model="UserModel" OnValidSubmit="HandleSubmit">
@@ -26,28 +26,6 @@
 
     <button type="submit" class="registerbtn">Register</button>
 </EditForm>
-@* 
-<EditForm Model="UserModel" OnValidSubmit="HandleSubmit">
-	<DataAnnotationsValidator />
-	<ValidationSummary />
-	<div class="form-group">
-		<label for="name"><b>Name</b></label>
-		<InputText id="name" @bind-Value="UserModel.Name"/>
-		<ValidationMessage For="@(()=> UserModel.Name)" />
-	</div>
-
-	<div class="form-group">
-		<label for="email"><b>Email</b></label>
-		<input type="email" id="email" @bind="UserModel.Email" required />
-	</div>
-
-	<div class="form-group">
-		<label for="password"><b>Password</b></label>
-		<input type="password" id="password" @bind="UserModel.Password" required />
-	</div>
-
-	<button type="submit" class="registerbtn">Register</button>
-</EditForm> *@
 
 <div class="container signin">
 	<p>Already have an account? <a href="/sign-in">Sign in</a>.</p>
@@ -61,5 +39,6 @@
 	private void HandleSubmit()
 	{
 		UserRegistrationService.RegisterUser(UserModel);
+		NavigationManager.NavigateTo("/");
 	}
 }

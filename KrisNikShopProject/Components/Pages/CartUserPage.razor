@@ -76,15 +76,13 @@ else
 
     public bool ShowCardSubmitPage { get; set; } 
 
-    private CardDetails cardDetails = new CardDetails();
-
     private TaskCompletionSource<bool> tcs = null;
 
     private List<ProductModel> cartItems;
     private Dictionary<int, int> quantitiesToRemove = new Dictionary<int, int>();
     private Dictionary<int, bool> selectedItems = new Dictionary<int, bool>();
 
-
+    // This function is called when the component is initialized. It gets the user and their cart items.
     protected override async Task OnInitializedAsync()
     {
         await Task.Run(() => User = UserRegistrationService.GetUserById(UserId));
@@ -96,6 +94,7 @@ else
         }
     }
 
+    // This function removes a specified quantity of a product from the cart.
     private void RemoveFromCart(ProductModel item, int quantityToRemove)
     {
         CartStorageService.RemoveFromCarts(item, quantityToRemove);
@@ -109,6 +108,7 @@ else
         UserRegistrationService.SignInUser(UserRegistrationService.CurrentUser);
     }
 
+    // This function creates an order for a specific product and removes it from the cart.
     private async void OrderItem(ProductModel product)
     {
         if(UserRegistrationService?.CurrentUser?.CardNumber == null) 
@@ -123,6 +123,7 @@ else
         RemoveFromCart(product, product.Quantity);
     }
 
+    // This function creates an order for all selected items and removes them from the cart.
     private void OrderSelectedItems()
     {
         foreach (var item in cartItems)
@@ -134,6 +135,7 @@ else
         }
     }
 
+    // This function creates an order for all items in the cart and removes them from the cart.
     private void OrderAllItems()
     {
         foreach (var item in cartItems)
@@ -142,6 +144,7 @@ else
         }
     }
 
+    // This function hides the card submission page and sets the result of the task completion source to true if the card submission was successful.
     private void HideCardSubmitPage(bool isCardSubmissionSuccessful = false)
     {
         ShowCardSubmitPage = false;
@@ -151,18 +154,10 @@ else
         }
     }
 
+    // This function is called when the quantity to remove is updated. It triggers a re-render of the component.
     private void UpdateQuantityToRemove(ChangeEventArgs e)
     {
         StateHasChanged();
-    }
-
-
-    public class CardDetails
-    {
-        public string CardNumber { get; set; }
-        public string CSC { get; set; }
-        public string ExpiryYear { get; set; }
-        public string NameOnCard { get; set; }
     }
 }
 

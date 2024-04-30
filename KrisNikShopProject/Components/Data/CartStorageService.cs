@@ -17,6 +17,7 @@
             //which can then be used throughout the CartStorageService class.
         }
 
+        // This function adds a product to the cart of the current user.
         public void AddProduct(ProductModel product, int count = 1)
         {
             if (userRegistrationService.CurrentUser != null)
@@ -49,6 +50,8 @@
                     }
             }
         }
+
+        // This function deletes the cart of a user with a given ID.
         public void DeleteCart(int? ID)
         {
             if (userRegistrationService.CurrentUser != null)
@@ -62,6 +65,7 @@
             }
         }
 
+        // This function removes a specified quantity of a product from the cart of the current user.
         public void RemoveFromCarts(ProductModel product, int count = 1)
         {
             if (userRegistrationService.CurrentUser != null)
@@ -92,8 +96,8 @@
                 }
             }
         }
-        
 
+        // This function gets all products in the cart of the current user.
         public List<ProductModel> GetAllProducts()
         {
             // Need to count the quantity of items that have the same id
@@ -120,6 +124,7 @@
             return products;
         }
 
+        // This function gets all products in the cart of a user with a given ID.
         public List<ProductModel> GetAllProducts(UserModel user)
         {
             // Need to count the quantity of items that have the same id

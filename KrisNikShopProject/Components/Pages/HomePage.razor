@@ -2,11 +2,31 @@
 @inject UserRegistrationService UserRegistrationService
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
-<h3>@UserRegistrationService.GetCurrentUserString()</h3>
+@if (UserRegistrationService.CurrentUser != null)
+{
+    <h1>Welcome, @UserRegistrationService.CurrentUser.Name!</h1>
+    <a href="/magazine">Go to Magazine</a>
+}
+else
+{
+    <h1>Welcome, Guest!</h1>
+	<a href="/regist">Register</a>
+	<a href="/productpage">Go to Shop</a>
+}
 
-Welcome to your new app.
+<style>
+    h1 {
+		font-size: 24px;
+		color: #333;
+	}
 
-@code{}
+	a {
+		margin-right: 10px;
+		color: #007BFF;
+		text-decoration: none;
+	}
 
-
+	a:hover {
+		color: #0056b3;
+	}
+</style>

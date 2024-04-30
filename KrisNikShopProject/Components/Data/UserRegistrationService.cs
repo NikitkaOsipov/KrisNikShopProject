@@ -26,7 +26,8 @@ namespace KrisNikShopProject.Components.Data
 			FILE_NAME = Path.Combine(currentDirectory, Path.Combine("Components", "Collections", "Users.csv"));
 		}
 
-        public Boolean RegisterUser(UserModel user)
+        // This function registers a new user.
+        public void RegisterUser(UserModel user)
         {
             UserModel? rightUser = GetUserEmail(user.Email!);
             if(rightUser == null) //checks if the user email is unique 
@@ -39,22 +40,20 @@ namespace KrisNikShopProject.Components.Data
                     sw.WriteLine(user.ToString());
                 }
                 CurrentUser = user;
-                return true; // if the user email is unique return true
             }
-            return false; // if the user email already exixts return false
         }
 
-        public Boolean SignInUser(UserModel user)
+        // This function signs in a user.
+        public void SignInUser(UserModel user)
         {
             UserModel? rightUser = GetUserEmail(user.Email!);
             if(rightUser != null && rightUser?.Password == user.Password) 
             { 
                 CurrentUser = rightUser;
-                return true; // if user is registrated returns true
             }
-            return false;//if user not registrated returns false Kristian Loh
         }
 
+        // This function gets all registered users.
         public List<UserModel> GetAllUsers()
         {
             List<UserModel> users = new List<UserModel>();
@@ -73,27 +72,7 @@ namespace KrisNikShopProject.Components.Data
             return users;
         }
 
-        //public async Task<UserModel[]> GetAllUsersAsync()
-        //{
-        //    List<Task<UserModel>> tasks = new List<Task<UserModel>>();
-        //    using (var reader = new StreamReader(FILE_NAME))
-        //    {
-        //        while (!reader.EndOfStream)
-        //        {
-        //            tasks.Add(Task.Run(() =>
-        //            {
-        //                string[] line = reader.ReadLine()!.Split(",");
-        //                return new UserModel(Int32.Parse(line[0]),
-        //                        line[1], line[2], line[3], line[4]);
-        //            }));
-        //        }
-        //    }
-
-        //    var result = await Task.WhenAll(tasks);
-        //    return result;
-        //}
-
-
+        // This function gets a user by their email.
         public UserModel? GetUserEmail(string email)
         {   
             UserModel? resultUser = null;
@@ -108,6 +87,7 @@ namespace KrisNikShopProject.Components.Data
             return resultUser;
         }
 
+        // This function gets a user by their ID.
         public UserModel? GetUserById(int id)
         {   
             UserModel? resultUser = null;
@@ -122,6 +102,7 @@ namespace KrisNikShopProject.Components.Data
             return resultUser;
         }
 
+        // This function changes the data of a user.
         public void ChangeUserData(UserModel changeDataUser)
         {
             List<UserModel> users = GetAllUsers();
@@ -146,6 +127,7 @@ namespace KrisNikShopProject.Components.Data
                 CurrentUser = changeDataUser;
         }
 
+        // This function deletes a user.
         public void DeleteUser(UserModel userToDelete)
         {
             List<UserModel> users = GetAllUsers();
@@ -167,13 +149,14 @@ namespace KrisNikShopProject.Components.Data
         }
 
 
-
+        // This function gets a string representation of the current user.
         public string GetCurrentUserString()
         {
             string result = (CurrentUser?.Name ?? "Guest") + " " + (CurrentUser?.Email ?? "unknownEmail") + "!!!!";
 			return result;
 		}
 
+        // This function signs out the current user.
         public void SignOutUser() => CurrentUser = null;
     }
 }
