@@ -39,7 +39,8 @@ else
                     <h5>@item.Name</h5>
                     <p>@item.Description</p>
                     <p>Price: @item.Price</p>
-                     <p>Quantity: @item.Quantity</p> @* ERROR IDK WHY PLZ HELP NIKITA *@
+                    <p>Quantity: @item.Quantity</p>
+                    <p>Total Price: @((decimal)item.Price * (decimal)item.Quantity)</p>
                     
                 </div>
 

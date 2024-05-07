@@ -5,14 +5,13 @@
 @if (UserRegistrationService.CurrentUser != null)
 {
     <h1>Welcome, @UserRegistrationService.CurrentUser.Name!</h1>
-    <a href="/magazine">Go to Magazine</a>
 }
 else
 {
     <h1>Welcome, Guest!</h1>
 	<a href="/regist">Register</a>
-	<a href="/productpage">Go to Shop</a>
 }
+<a href="/productpage">Go to Shop</a>
 
 <style>
     h1 {

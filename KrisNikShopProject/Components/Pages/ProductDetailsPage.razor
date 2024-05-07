@@ -26,6 +26,7 @@ else
                 <p>Quantity:</p>
                 <input type="range" min="@MinValue" max="@MaxValue" @bind="CurrentValue" @oninput="ValueChanged" />
                 <InputNumber class="quantity-input" @bind-Value="CurrentValue" min="@MinValue" max="@MaxValue" />
+                <p>Total Price: @((decimal)product.Price * (decimal)CurrentValue)</p>
             </div>
             @if (isAddedToCart)
             {

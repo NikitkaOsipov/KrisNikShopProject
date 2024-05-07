@@ -19,8 +19,8 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
+                <th><button @onclick="() => SortById()">ID</button></th>
+                <th><button @onclick="() => SortByName()">Name</button></th>
                 <th>Email</th>
                 <th>Role</th>
                 <th>Creation date</th>
@@ -72,5 +72,15 @@ else
     private void EditOrders(int? id)
     {
         NavigationManager.NavigateTo($"/orders/{id}");
+    }
+
+    private void SortByName()
+    {
+        users = users.OrderBy(u => u.Name).ToArray();
+    }
+
+    private void SortById()
+    {
+        users = users.OrderBy(u => u.Id).ToArray();
     }
 }
