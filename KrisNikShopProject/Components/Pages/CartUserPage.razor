@@ -77,7 +77,7 @@ else
 
     public bool ShowCardSubmitPage { get; set; } 
 
-    private TaskCompletionSource<bool> tcs = null;
+    private TaskCompletionSource<bool>? tcs;
 
     private List<ProductModel> cartItems;
     private Dictionary<int, int> quantitiesToRemove = new Dictionary<int, int>();

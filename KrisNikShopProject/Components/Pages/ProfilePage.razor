@@ -3,6 +3,11 @@
 @inject UserRegistrationService userRegistrationService
 @rendermode InteractiveServer
 
+@if (ShowCardSubmitPage)
+{
+    <CardSubmitPage OnCancel="HideCardSubmitPage" Tcs="tcs" />
+}
+
 <div class="container">
     <h2>@userRegistrationService?.CurrentUser?.Name's Profile</h2>
     <div class="profile-info">
@@ -12,11 +17,33 @@
         <p><strong>Date of creation:</strong> @userRegistrationService?.CurrentUser?.DateOfCreating</p>
     </div>
     <button class="btn btn-primary" @onclick="NavigateToEditPage">Edit Profile</button>
+    <button class="btn btn-primary" @onclick="ChangeCard">Edit Card</button>
 </div>
 
 @code {
+    public bool ShowCardSubmitPage { get; set; }
+
+    private TaskCompletionSource<bool>? tcs;
+
     private void NavigateToEditPage()
     {
         NavigationManager.NavigateTo($"/editprofile/{userRegistrationService.CurrentUser!.Email}");
+    }
+
+    private async void ChangeCard()
+    {
+        tcs = new TaskCompletionSource<bool>();
+        ShowCardSubmitPage = true;
+        StateHasChanged();
+        await tcs.Task;
+    }
+
+    private void HideCardSubmitPage(bool isCardSubmissionSuccessful = false)
+    {
+        ShowCardSubmitPage = false;
+        if (isCardSubmissionSuccessful && tcs != null && !tcs.Task.IsCompleted)
+        {
+            tcs.SetResult(true);
+        }
     }
 }

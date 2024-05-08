@@ -58,7 +58,7 @@
             Country = product.Country;
             CardNumber = user.CardNumber;
             NameSurName = user.CardNameSurname;
-            TravelTime = new TimeSpan();
+            TravelTime = product.TravelTime;
             DateOfOrder = DateTime.Now;
             DateOfArrival = DateOfOrder.Add(TravelTime);
         }

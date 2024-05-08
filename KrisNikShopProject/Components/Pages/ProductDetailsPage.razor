@@ -12,27 +12,38 @@
 else
 {
     <div class="product-detail">
-        <h2>@product.Name</h2>
-        <img src="@product.Image" alt="@product.Name" style="width:150px; height:200px;" />
-        <p>@product.Description</p>
-        <p>Price: @product.Price.ToString("C")</p>
-        @if (userRegistrationService.CurrentUser == null)
-        {
-            <p style="color:red;">You must <a href="/sign-in">sign in</a> to add products to the cart.</p>
-        } else
-        {
-            <button class="btn btn-primary" @onclick="AddToCart">Add to Cart</button>
-            <div class="quantity-control">
-                <p>Quantity:</p>
-                <input type="range" min="@MinValue" max="@MaxValue" @bind="CurrentValue" @oninput="ValueChanged" />
-                <InputNumber class="quantity-input" @bind-Value="CurrentValue" min="@MinValue" max="@MaxValue" />
-                <p>Total Price: @((decimal)product.Price * (decimal)CurrentValue)</p>
-            </div>
-            @if (isAddedToCart)
+        <div class="product-image-container">
+            <img src="@product.Image" alt="@product.Name" class="product-image" />
+        </div>
+        <div class="product-info">
+            <h2>@product.Name</h2>
+            <p>@product.Description</p>
+            <p>Category: @product.Category</p>
+            <p>Brand: @product.Brand</p>
+            <p>Size: @product.Size</p>
+            <p>Material: @product.Material</p>
+            <p>Country: @product.Country</p>
+            <p>Price: @product.Price.ToString("C")</p>
+            <p>Travel time: @product.TravelTime</p>
+            @if (userRegistrationService.CurrentUser == null)
             {
-                <p>Product was added to cart.</p>
+                <p style="color:red;">You must <a href="/sign-in">sign in</a> to add products to the cart.</p>
             }
-        }
+            else
+            {
+                <button class="btn btn-primary" @onclick="AddToCart">Add to Cart</button>
+                <div class="quantity-control">
+                    <p>Quantity:</p>
+                    <input type="range" min="@MinValue" max="@MaxValue" @bind="CurrentValue" @oninput="ValueChanged" />
+                    <InputNumber class="quantity-input" @bind-Value="CurrentValue" min="@MinValue" max="@MaxValue" />
+                    <p>Total Price: @((decimal)product.Price * (decimal)CurrentValue)</p>
+                </div>
+                @if (isAddedToCart)
+                {
+                    <p>Product was added to cart.</p>
+                }
+            }
+        </div>
     </div>
 }
 
@@ -71,11 +82,48 @@ else
 }
 
 <style>
+    .product-detail {
+        display: flex;
+        gap: 20px;
+        padding: 20px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+        font-size: 18px;
+    }
+
+    .product-image-container {
+        flex: 1;
+    }
+
+    .product-image {
+        width: 500px;
+        height: 500px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .product-info {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+        .product-info h2 {
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .product-info p {
+            margin: 3px 0;
+        }
+
     .quantity-control {
         display: flex;
         align-items: center;
         gap: 10px;
-        margin-top: 20px;
+        margin-top: 10px;
     }
 
     .quantity-input {

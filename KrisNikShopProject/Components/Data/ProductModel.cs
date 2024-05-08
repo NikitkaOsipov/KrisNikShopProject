@@ -13,25 +13,25 @@
         public string? Material { get; set; }
         public string? Country { get; set; }
         public string? Image { get; set; }
+        public TimeSpan TravelTime { get; set; }
 
         public ProductModel()
         {
         }
 
-        public ProductModel(int id, string name, string description, double price, int quantity, ProductCategories category, string brand, string size, string material, string country, string image)
+        public ProductModel(int id, string name, string description, double price, ProductCategories category, string brand, string size, string material, string country, string image, TimeSpan travelTime)
         {
             Id = id;
             Name = name;
             Description = description;
             Price = price;
-            Quantity = quantity;
             Category = category;
             Brand = brand;
             Size = size;
             Material = material;
-            Image = image;
             Country = country;
-
+            Image = image;
+            TravelTime = travelTime;
         }
     }
 }

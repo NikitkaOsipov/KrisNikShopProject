@@ -1,6 +1,35 @@
-1,Pizza,Pepperoni Pizza very delicious and tasty.,14.34,10,0,Sapog,10x10,Cheese Pepperoni,Germany,1200,https://www.allrecipes.com/thmb/iXKYAl17eIEnvhLtb4WxM7wKqTc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/240376-homemade-pepperoni-pizza-Beauty-3x4-1-6ae54059c23348b3b9a703b6a3067a44.jpg
-2,Pizza,Margherita Pizza very delicious and tasty.,12.34,10,0,Sapog,10x10,Cheese Margherita,Germany,1200,https://thesaltymarshmallow.com/wp-content/uploads/2019/08/Margherita-Pizza-Recipe-03.jpg
-3,Pizza,Cheese Pizza very delicious and tasty.,10.34,10,0,Sapog,10x10,Cheese,Germany,1200,https://th.bing.com/th/id/R.0408deadfbc3e68b37346b92bf044d9c?rik=InWfdZSmIqWfzA&pid=ImgRaw&r=0
-4,Pizza,Veggie Pizza not very delicious and tasty.,15.34,10,0,Sapog,10x10,Veggie,Germany,1200,https://th.bing.com/th/id/R.1810c4568eafc9bda4ea540b656470f7?rik=WNaGMZD9D0sW8Q&pid=ImgRaw&r=0
-5,Pizza,Chicken Pizza very delicious and tasty.,16.34,10,0,Sapog,10x10,Chicken,Germany,1200,https://www.tasteofhome.com/wp-content/uploads/2017/10/Chicken-Pizza_exps30800_FM143298B03_11_8bC_RMS-2.jpg
-6,Pizza,BBQ Pizza very delicious and tasty.,17.34,10,0,Sapog,10x10,BBQ,Germany,1200,https://th.bing.com/th/id/R.ba9fc2970960bd2f04d3f23e8fe2f46b?rik=F0zBIQpYOtPmmQ&pid=ImgRaw&r=0
+1,Pizza,Pepperoni Pizza very delicious and tasty.,14.34,0,Sapog,10x10,Cheese Pepperoni,Germany,https://www.allrecipes.com/thmb/iXKYAl17eIEnvhLtb4WxM7wKqTc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/240376-homemade-pepperoni-pizza-Beauty-3x4-1-6ae54059c23348b3b9a703b6a3067a44.jpg,01:00:00
+2,Pizza,Margherita Pizza very delicious and tasty.,12.34,0,Sapog,10x10,Cheese Margherita,Germany,https://thesaltymarshmallow.com/wp-content/uploads/2019/08/Margherita-Pizza-Recipe-03.jpg,02:00:00
+3,Pizza,Cheese Pizza very delicious and tasty.,10.34,0,Sapog,10x10,Cheese,Germany,https://th.bing.com/th/id/R.0408deadfbc3e68b37346b92bf044d9c?rik=InWfdZSmIqWfzA&pid=ImgRaw&r=0,03:00:00
+4,Pizza,Veggie Pizza not very delicious and tasty.,15.34,0,Sapog,10x10,Veggie,Germany,https://th.bing.com/th/id/R.1810c4568eafc9bda4ea540b656470f7?rik=WNaGMZD9D0sW8Q&pid=ImgRaw&r=0,04:00:00
+5,Pizza,Chicken Pizza very delicious and tasty.,16.34,0,Sapog,10x10,Chicken,Germany,https://www.tasteofhome.com/wp-content/uploads/2017/10/Chicken-Pizza_exps30800_FM143298B03_11_8bC_RMS-2.jpg,05:00:00
+6,Pizza,BBQ Pizza very delicious and tasty.,17.34,0,Sapog,10x10,BBQ,Germany,https://th.bing.com/th/id/R.ba9fc2970960bd2f04d3f23e8fe2f46b?rik=F0zBIQpYOtPmmQ&pid=ImgRaw&r=0,06:00:00
+7,Pasta,Italian Pasta very delicious and tasty.,12.34,Food,Sapog,10x10,Cheese Margherita,Italy,https://insanelygoodrecipes.com/wp-content/uploads/2022/01/Homemade-Pasta-Zucchini-in-a-Plate.jpg,07:00:00
+8,iPhone,Newest iPhone model.,999.99,Electronics,Apple,6.1,Aluminium,USA,https://www.istore.co.za/media/catalog/product/cache/4ebc814e413626645aa42e369230a31f/i/p/iphone_14_blue-5_3.jpg,08:00:00
+9,MacBook,Newest MacBook model.,1299.99,Electronics,Apple,13,Aluminium,USA,https://www.apple.com/newsroom/images/product/mac/standard/Apple_new-macbook-air-wallpaper-screen_03182020_big.jpg.large.jpg,09:00:00
+10,T-Shirt,Cotton T-Shirt.,19.99,Clothes,Brand,Medium,Cotton,USA,https://m.media-amazon.com/images/I/4109jZpQBwL._AC_.jpg,10:00:00
+11,Jeans,Blue Jeans.,49.99,Clothes,Brand,32,Cotton,USA,https://images.jackjones.com/12202489/3796886/001/jackjones-jjieddiejjoriginalcj911pcwloosefitjeans-blue.jpg?v=3fdfa81383ff7fcdc5e78abdb8e8674a&format=webp&width=1280&quality=90&key=25-0-3,11:00:00
+12,Harry Potter,The complete Harry Potter series.,59.99,Books,JK Rowling,N/A,Paper,UK,https://img.ws.mms.shopee.com.my/2cb37c5ab84dc58b3bbdbf1c12a5b8ac,12:00:00
+14,Lord of the Rings,The complete Lord of the Rings series.,39.99,Books,JRR Tolkien,N/A,Paper,UK,https://hips.hearstapps.com/hmg-prod/images/index-1666029047.jpg?crop=0.502xw:1.00xh,10:00:00
+15,Lego Set,Lego Star Wars set.,29.99,Toys,Lego,N/A,Plastic,Denmark,https://www.lego.com/cdn/cs/set/assets/blt26611c0d39062c4f/75360_alt1.png,10:00:00
+16,Barbie Doll,Barbie princess doll.,19.99,Toys,Barbie,N/A,Plastic,USA,https://m.media-amazon.com/images/I/81IjJI3M7SL.jpg,10:00:00
+17,Lipstick,Red lipstick.,9.99,Cosmetics,Brand,N/A,Wax,France,https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1642517027-876501_105_poppy_red_1.jpg?crop=0.933xw:1xh,10:00:00
+18,Mascara,Black mascara.,12.99,Cosmetics,Brand,N/A,Wax,France,https://i.makeup.lv/9/9z/9zx6lrsxx7sy.jpg,10:00:00
+19,Chair,Wooden chair.,49.99,Furniture,Brand,Medium,Wood,USA,https://i.pinimg.com/736x/8e/ca/bc/8ecabc10954b0f136b2dd5bf509d0ef6.jpg,10:00:00
+20,Table,Wooden table.,99.99,Furniture,Brand,Medium,Wood,USA,https://media.diy.com/is/image/Kingfisher/goodhome-denia-natural-wooden-6-seater-rectangular-table~3663602723127_02bq?$MOB_PREV$&$width=768&$height=768,10:00:00
+21,Refrigerator,Large refrigerator.,599.99,Appliances,Brand,Medium,Metal,USA,https://cdn.shopify.com/s/files/1/2660/5202/products/shopify-image_d36a8218-eb47-405e-9e2b-058dcf1846ff.jpg?v=1710865340,10:00:00
+22,Washing Machine,Washing machine.,499.99,Appliances,Brand,Medium,Metal,USA,https://hips.hearstapps.com/hmg-prod/images/best-washing-machines-6580810397efc.png?crop=0.405xw:0.811xh,10:00:00
+23,Football,Football ball.,19.99,Sports,Brand,Medium,Leather,USA,https://i.ebayimg.com/images/g/Q-oAAOSw9Lpl41K7/s-l1200.webp,10:00:00
+24,Basketball,Basketball ball.,19.99,Sports,Brand,Medium,Leather,USA,https://upload.wikimedia.org/wikipedia/commons/7/7a/Basketball.png,10:00:00
+25,Tent,2-person tent.,99.99,Outdoor,Brand,Medium,Nylon,USA,https://www.travelandleisure.com/thmb/OW82-OC2lFCgvYt-GohTm8zJlyE=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/REI-Co-op-Half-Dome-SL-2-Person-Tent-a1a189ab215e45d899eb9aa03bdefe4a.jpg,10:00:00
+26,Sleeping Bag,Warm sleeping bag.,49.99,Outdoor,Brand,Medium,Nylon,USA,https://d1nymbkeomeoqg.cloudfront.net/photos/18/60/307513_10163_XL.jpg,10:00:00
+27,Guitar,Acoustic guitar.,199.99,Music,Brand,Medium,Wood,USA,https://d1aeri3ty3izns.cloudfront.net/media/19/191943/600/preview_1.jpg,10:00:00
+28,Piano,Grand piano.,1999.99,Music,Brand,Medium,Wood,USA,https://d1aeri3ty3izns.cloudfront.net/media/67/671458/600/preview.jpg,10:00:00
+29,Video Game,Popular video game.,59.99,Games,Brand,N/A,Plastic,USA,https://www.blockfort.com/wp-content/uploads/9214/6986/2743/MortalKombat.jpg,10:00:00
+30,Board Game,Popular board game.,29.99,Games,Brand,N/A,Paper,USA,https://i5.walmartimages.com/asr/89548a96-8357-47e2-9224-8b86bce3a4de.cb587a76b750bd43e839521e410d1d6b.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF,10:00:00
+31,Vitamins,Multivitamin supplement.,19.99,Health,Brand,N/A,Plastic,USA,https://images.ctfassets.net/ydyvnem5zkxh/19V3f9XaJlkP44zrKJ7OR6/ceb029479d5b862e8466f6586d5823ad/Product_Multivitamin.png?w=1000&h=750&q=50&fm=png,10:00:00
+32,Hemotogen,Protein supplement.,29.99,Health,Brand,N/A,Plastic,USA,https://internetaptieka.lv/images/29a47876-3238-46ca-8b19-e8846fb36f69_2edc6905ca785be3103acadf913a905b27da648668902a3df860e8948810df85.webp,10:00:00
+33,Lamp,Table lamp.,29.99,HomeDecor,Brand,Medium,Glass,USA,https://d2rbyiw1vv51io.cloudfront.net/web/ikea4/images/595/1059594_PE849715_S5.jpg,10:00:00
+34,Picture Frame,Wooden picture frame.,9.99,HomeDecor,Brand,Medium,Wood,USA,https://www.mulbury.com.au/cdn/shop/products/mulbury-photo-frame-4-x-4-acrylic-chunky-oiled-6cm-frame-28750598438978.jpg?v=1681356689,10:00:00
+35,Notebook,Notebook.,9.99,Other,Brand,Medium,Paper,USA,https://m.media-amazon.com/images/I/71vrP7GOBLL.jpg,10:00:00
+36,Pen,Pen,1.99,Other,Brand,Medium,Plastic,USA,https://www.faber-castell.com/-/media/Products/Product-Repository/Miscellaneous-ballpoint-pens/24-24-05-Ballpoint-pen/143499-Ballpoint-Pen-Basic-M-black/Images/143499_0_PM99.ashx?bc=ffffff&as=0&h=900&w=900&sc_lang=en-Glob&hash=39297B315D64AC3EF9FF2479FE18C876,10:00:00

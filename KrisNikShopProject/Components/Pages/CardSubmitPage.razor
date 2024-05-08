@@ -8,7 +8,7 @@
                 <h5 class="modal-title">Card Information</h5>
             </div>
             <div class="modal-body">
-                <EditForm Model="CardInfo" OnValidSubmit="HandleValidSubmit"> // Submit even if incorrect input + yaer and month
+                <EditForm Model="CardInfo" OnValidSubmit="HandleValidSubmit">
                     <DataAnnotationsValidator />
                     <ValidationSummary />
 
@@ -66,6 +66,19 @@
     [Parameter]
     public TaskCompletionSource<bool> Tcs { get; set; }
 
+    protected override async Task OnInitializedAsync()
+    {
+        UserModel userToChange = userRegistrationService.CurrentUser;
+
+        if (userToChange.CardNumber != null)
+		{
+			CardInfo.CardNumber = userToChange.CardNumber;
+			CardInfo.CVC = userToChange.CardCVC2;
+			CardInfo.NameSurname = userToChange.CardNameSurname;
+            CardInfo.ExpiryYear = int.Parse(userToChange.CardDate.ToString().Split('/')[0]);
+            CardInfo.ExpiryMonth = int.Parse(userToChange.CardDate.ToString().Split('/')[1]);
+		}
+    }
 
     public async Task HandleValidSubmit()
     {
