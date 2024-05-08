@@ -7,7 +7,7 @@
         public double Price { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public string? Category { get; set; }
+        public ProductCategories? Category { get; set; }
         public string? Brand { get; set; }
         public string? Size { get; set; }
         public string? Material { get; set; }
@@ -18,7 +18,7 @@
         {
         }
 
-        public ProductModel(int id, string name, string description, double price, int quantity, string category, string brand, string size, string material, string country, string image)
+        public ProductModel(int id, string name, string description, double price, int quantity, ProductCategories category, string brand, string size, string material, string country, string image)
         {
             Id = id;
             Name = name;
@@ -32,11 +32,6 @@
             Image = image;
             Country = country;
 
-        }
-
-        public override string ToString()
-        {
-            return Id + "," + Name + "," + Description + "," + Price + "," + Image + "," + Quantity + "," + Category + "," + Brand + "," + Size + "," + Material;
         }
     }
 }

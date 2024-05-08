@@ -2,6 +2,8 @@
 @inject ProductStorageService ProductService
 @attribute [StreamRendering]
 
+@rendermode InteractiveServer
+
 <h3>ProductPage</h3>
 
 @if (products == null)
@@ -10,10 +12,22 @@
 }
 else
 {
-    //https://www.youtube.com/watch?v=LJtGlRuotcc&ab_channel=Netcode-Hub
+    <button class="btn btn-primary product-page-button" @onclick="() => SortByName()">Name @nameSortIcon</button>
+    <button class="btn btn-primary product-page-button" @onclick="() => SortByPrice()">Cost @priceSortIcon</button>
+
+
+    <select class="btn btn-primary product-page-button dropdown" @onchange="SortByCategory">
+        <option value="">All Categories</option>
+        @foreach (var category in Enum.GetValues<ProductCategories>())
+        {
+            <option value="@category">@category</option>
+        }
+    </select>
+
+
     <div class="container-fluid">
         <div class="row featured__filter">
-            @foreach (var item in products)
+            @foreach (var item in displayProducts)
             {
                 <div class="col-lg-3 col-md-3 col-sm-6 border-success">
                     <div class="featured__item" style="width:200px;">
@@ -45,16 +59,103 @@ else
 @code {
     //In this code, I've added a NavLink component that wraps the img tag. The href attribute of the NavLink is set to navigate to a hypothetical "Product Detail" page for the clicked product. I've assumed that each product has a unique Id and that you have a route set up like /productdetail/{id} where {id} is the id of the product. You'll need to replace this with the actual route and parameter name if they're different.
     private List<ProductModel>? products;
+    private List<ProductModel>? displayProducts;
+
+    private bool isNameSortAsc = true;
+    private bool isPriceSortAsc = true;
+
+    public string sortIconDown = "🢃";
+    public string sortIconUp = "🢁";
+
+    public string priceSortIcon = "🢃";
+    public string nameSortIcon = "🢃";
+
 
     protected override async Task OnInitializedAsync()
     {
         products = await Task.Run(() => ProductService.GetAllProducts());
+        displayProducts = new List<ProductModel>(products);
     }
     // good links :https://www.youtube.com/watch?v=uDHfBGNcmFg&ab_channel=Code-Academy
     //https://www.youtube.com/watch?v=jSs5DUHAvBc&ab_channel=PatrickGod
+
+    private void SortByName()
+    {
+        if (isNameSortAsc)
+        {
+            displayProducts = displayProducts.OrderBy(p => p.Name).ToList();
+            nameSortIcon = "🢁";
+        }
+        else
+        {
+            displayProducts = displayProducts.OrderBy(p => p.Name).ToList();
+            nameSortIcon = "🢁";
+        }
+
+        isNameSortAsc = !isNameSortAsc;
+
+    }
+
+    private void SortByPrice()
+    {
+        if (isPriceSortAsc)
+        {
+            displayProducts = displayProducts.OrderBy(p => p.Price).ToList();
+            priceSortIcon = "🢁";
+        }
+        else
+        {
+            displayProducts = displayProducts.OrderByDescending(p => p.Price).ToList();
+            priceSortIcon = "🢃";
+        }
+
+        isPriceSortAsc = !isPriceSortAsc;
+    }
+
+    private void SortByCategory(ChangeEventArgs e)
+    {
+        if (string.IsNullOrEmpty(e.Value.ToString()))
+        {
+            displayProducts = new List<ProductModel>(products);
+        }
+        else
+        {
+            displayProducts = products.Where(p => p.Category.ToString() == e.Value.ToString()).ToList();
+        }
+    }
 }
 
 <style>
+    .product-page-button {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+    }
+
+        .product-page-button:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+    .btn-primary {
+        background-color: white;
+        color: black;
+        border: 2px solid #4CAF50;
+    }
+
+        .btn-primary:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
     .featured__item {
         /* Adjust as needed */
         padding: 10px;

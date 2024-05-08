@@ -8,7 +8,7 @@
         public double Price { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public string? Category { get; set; }
+        public ProductCategories? Category { get; set; }
         public string? Brand { get; set; }
         public string? Size { get; set; }
         public string? Material { get; set; }
@@ -24,7 +24,7 @@
         {
         }
 
-        public OrderModel(int id, int productID, string name, string description, double price, int quantity, string category, string brand, string size, string material, string country, TimeSpan travelTime, DateTime dateOfArrival, DateTime dateofOrder, string image)
+        public OrderModel(int id, int productID, string name, string description, double price, int quantity, ProductCategories category, string brand, string size, string material, string country, TimeSpan travelTime, DateTime dateOfArrival, DateTime dateofOrder, string image)
         {
             Id = id;
             ProductID = productID;
