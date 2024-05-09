@@ -5,25 +5,25 @@
 
 <h3>Sign-in</h3>
 
+<div class="registration-container">
+	<form @onsubmit="HandleSubmit" class="registration-form">
+		<div class="form-group">
+			<label for="email"><b>Email</b></label>
+			<input type="email" id="email" @bind="UserModel.Email" required />
+		</div>
 
-<form @onsubmit="HandleSubmit">
-	<div class="form-group">
-		<label for="email"><b>Email</b></label>
-		<input type="email" id="email" @bind="UserModel.Email" required />
+		<div class="form-group">
+			<label for="password"><b>Password</b></label>
+			<input type="password" id="password" @bind="UserModel.Password" required />
+		</div>
+
+		<button type="submit" class="btn-primary">Log in</button>
+	</form>
+
+	<div class="container signin">
+		<p>Don't have an acount? <a href="/regist">Register</a>.</p>
 	</div>
-
-	<div class="form-group">
-		<label for="password"><b>Password</b></label>
-		<input type="password" id="password" @bind="UserModel.Password" required />
-	</div>
-
-	<button type="submit" class="registerbtn">Log in</button>
-</form>
-
-<div class="container signin">
-	<p>Don't have an acount? <a href="/regist">Register</a>.</p>
 </div>
-
 @code {
 	private UserModel UserModel = new UserModel();
 
@@ -33,3 +33,41 @@
 		NavigationManager.NavigateTo("/");
 	}
 }
+
+
+<style>
+    .registration-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+        background-color: #f8f9fa;
+        justify-content: flex-start;
+        padding-top: 33.33vh; /* This will position the form at 1/3 from the top */
+    }
+
+    .registration-form {
+        width: 100%;
+        max-width: 330px;
+        padding: 15px;
+        margin: 0 auto;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .btn-primary {
+        width: 100%;
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+    }
+
+	.signin {
+        text-align: center;
+    }
+</style>

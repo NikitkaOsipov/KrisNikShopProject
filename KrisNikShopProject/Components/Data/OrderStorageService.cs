@@ -24,7 +24,7 @@ namespace KrisNikShopProject.Components.Data
         {
             if (userRegistrationService.CurrentUser != null)
             {
-                string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService.CurrentUser.Id}_orders.csv");
+                string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService.CurrentUser.Id}_orders.txt");
 
 
                 if (!File.Exists(fileName))
@@ -40,7 +40,7 @@ namespace KrisNikShopProject.Components.Data
                 }
 
                 string info = JsonConvert.SerializeObject(product);
-
+                
                 using (var sw = new StreamWriter(fileName, true))
                 {
                     sw.WriteLine(info);
@@ -54,7 +54,7 @@ namespace KrisNikShopProject.Components.Data
 
             List<OrderModel> orders = new List<OrderModel>();
 
-            string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService?.CurrentUser?.Id ?? 0}_orders.csv");
+            string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService?.CurrentUser?.Id ?? 0}_orders.txt");
 
             if (File.Exists(fileName))
             {
@@ -78,7 +78,7 @@ namespace KrisNikShopProject.Components.Data
 
             List<OrderModel> orders = new List<OrderModel>();
 
-            string fileName = Path.Combine(FILE_PATH, $"{user.Id}_orders.csv");
+            string fileName = Path.Combine(FILE_PATH, $"{user.Id}_orders.txt");
 
             if (File.Exists(fileName))
             {
@@ -104,7 +104,7 @@ namespace KrisNikShopProject.Components.Data
 
         public void DeleteOrder(UserModel user)
         {
-            string fileName = Path.Combine(FILE_PATH, $"{user.Id}_orders.csv");
+            string fileName = Path.Combine(FILE_PATH, $"{user.Id}_orders.json");
 
             if (File.Exists(fileName))
             {
