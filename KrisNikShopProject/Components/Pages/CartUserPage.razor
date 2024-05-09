@@ -113,7 +113,7 @@ else
     }
 
     // This function creates an order for a specific product and removes it from the cart.
-    private async void OrderItem(ProductModel product)
+    private async Task OrderItem(ProductModel product)
     {
         if(UserRegistrationService?.CurrentUser?.CardNumber == null) 
         {
@@ -128,8 +128,16 @@ else
     }
 
     // This function creates an order for all selected items and removes them from the cart.
-    private void OrderSelectedItems()
+    private async Task OrderSelectedItems()
     {
+        if(UserRegistrationService?.CurrentUser?.CardNumber == null) 
+        {
+            tcs = new TaskCompletionSource<bool>();
+            ShowCardSubmitPage = true;
+            StateHasChanged();
+            await tcs.Task;
+        } 
+
         foreach (var item in cartItems)
         {
             if (selectedItems[item.Id])
@@ -140,8 +148,16 @@ else
     }
 
     // This function creates an order for all items in the cart and removes them from the cart.
-    private void OrderAllItems()
+    private async Task OrderAllItems()
     {
+        if(UserRegistrationService?.CurrentUser?.CardNumber == null) 
+        {
+            tcs = new TaskCompletionSource<bool>();
+            ShowCardSubmitPage = true;
+            StateHasChanged();
+            await tcs.Task;
+        } 
+
         foreach (var item in cartItems)
         {
             OrderItem(item);
