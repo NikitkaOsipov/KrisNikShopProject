@@ -2,6 +2,7 @@
 @inject UserRegistrationService userRegistrationService
 @inject NavigationManager NavigationManager
 @inject CartStorageService CartStorageService
+@inject OrderStorageService OrderStorageService
 @rendermode InteractiveServer
 
 <EditForm Model="@UserToChange" OnValidSubmit="HandleValidSubmit">
@@ -52,6 +53,7 @@
     {
         CartStorageService.DeleteCart(UserToChange?.Id);
         userRegistrationService.DeleteUser(UserToChange!);
+        OrderStorageService.DeleteOrder(UserToChange);
         NavigationManager.NavigateTo("/");
     }
 

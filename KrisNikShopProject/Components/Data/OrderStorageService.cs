@@ -34,7 +34,7 @@ namespace KrisNikShopProject.Components.Data
                 }
                 else
                 {
-                    int? maxId = GetAllOrders().Max(order => order.Id); // ERRRORORORORO
+                    int? maxId = GetAllOrders().Max(order => order.Id);
                     product.Id = maxId.GetValueOrDefault() + 1;
                     
                 }
@@ -47,51 +47,6 @@ namespace KrisNikShopProject.Components.Data
                 }
             }
         }
-
-        // public void DeleteCart(int? ID)
-        // {
-        //     if (userRegistrationService.CurrentUser != null)
-        //     {
-        //         string fileName = Path.Combine(FILE_PATH, $"{ID}_cart.csv");
-
-        //         if (File.Exists(fileName))
-        //         {
-        //             File.Delete(fileName);
-        //         }
-        //     }
-        // }
-
-        // public void RemoveFromCarts(ProductModel product, int count = 1)
-        // {
-        //     if (userRegistrationService.CurrentUser != null)
-        //     {
-        //         string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService.CurrentUser.Id}_orders.csv");
-
-        //         List<ProductModel>? cartProducts = GetAllProducts();
-
-
-        //         if (cartProducts.FirstOrDefault(p => p.Id == product.Id) != null)
-        //         {
-        //             ProductModel? productToChange = cartProducts.FirstOrDefault(p => p.Id == product.Id);
-        //             productToChange.Quantity -= count;
-
-        //             if (productToChange.Quantity <= 0)
-        //             {
-        //                 cartProducts.Remove(productToChange);
-        //             }
-
-        //             using (var sw = new StreamWriter(fileName))
-        //             {
-
-        //                 foreach (ProductModel? p in cartProducts)
-        //                 {
-        //                     sw.WriteLine($"{p.Id},{p.Quantity}");
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-
 
         public List<OrderModel> GetAllOrders()
         {
@@ -145,6 +100,16 @@ namespace KrisNikShopProject.Components.Data
         {
             List<OrderModel> orders = GetAllOrders(user);
             return orders.FirstOrDefault(order => order.Id == ID);
+        }
+
+        public void DeleteOrder(UserModel user)
+        {
+            string fileName = Path.Combine(FILE_PATH, $"{user.Id}_orders.csv");
+
+            if (File.Exists(fileName))
+            {
+                File.Delete(fileName);
+            }
         }
     }
 }
