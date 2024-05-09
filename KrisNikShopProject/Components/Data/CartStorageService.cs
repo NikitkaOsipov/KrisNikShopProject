@@ -66,13 +66,13 @@
         }
 
         // This function removes a specified quantity of a product from the cart of the current user.
-        public void RemoveFromCarts(ProductModel product, int count = 1)
+        public void RemoveFromCarts(ProductModel product, UserModel user, int count = 1)
         {
-            if (userRegistrationService.CurrentUser != null)
+            if (user != null)
             {
-                string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService.CurrentUser.Id}_cart.csv");
+                string fileName = Path.Combine(FILE_PATH, $"{user.Id}_cart.csv");
 
-                List<ProductModel>? cartProducts = GetAllProducts();
+                List<ProductModel>? cartProducts = GetAllProducts(user);
                 
 
                 if(cartProducts.FirstOrDefault(p => p.Id == product.Id) != null)

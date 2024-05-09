@@ -2,6 +2,7 @@
 @inject CartStorageService CartStorageService
 @inject OrderStorageService OrderStorageService
 @inject UserRegistrationService UserRegistrationService
+@inject NavigationManager NavigationManager
 @using KrisNikShopProject.Components.Pages
 
 @rendermode InteractiveServer
@@ -23,7 +24,7 @@ else
         <button class="btn btn-primary" @onclick="OrderSelectedItems">Order Selected Items</button>
         <button class="btn btn-primary" @onclick="OrderAllItems">Order All Items</button>
     }
-    else
+    else if (cartItems.Count == 0)
     {
         <p><em>Your cart is empty</em></p>
     }
@@ -45,12 +46,12 @@ else
                 </div>
 
                 <div class="col-md-4">
-                    <label class="checkbox-label">
-                        <input type="checkbox" @bind="selectedItems[item.Id]" />
-                        <span>Select for ordering</span>
-                    </label>
                     @if (User.Id == UserRegistrationService.CurrentUser.Id) 
                     {
+                        <label class="checkbox-label">
+                            <input type="checkbox" @bind="selectedItems[item.Id]" />
+                            <span>Select for ordering</span>
+                        </label>
                         <button class="btn btn-primary" @onclick="() => OrderItem(item)">Order Item</button>
                     }
 
@@ -98,15 +99,17 @@ else
     // This function removes a specified quantity of a product from the cart.
     private void RemoveFromCart(ProductModel item, int quantityToRemove)
     {
-        CartStorageService.RemoveFromCarts(item, quantityToRemove);
-        cartItems = CartStorageService.GetAllProducts();
+        CartStorageService.RemoveFromCarts(item, User, quantityToRemove);
+        cartItems = CartStorageService.GetAllProducts(User);
         StateHasChanged();
 
         foreach (var cartItem in cartItems)
         {
             quantitiesToRemove[cartItem.Id] = 1;
         }
-        UserRegistrationService.SignInUser(UserRegistrationService.CurrentUser);
+        if (User.Id == UserRegistrationService.CurrentUser.Id)
+            UserRegistrationService.SignInUser(UserRegistrationService.CurrentUser);
+        else NavigationManager.NavigateTo($"/cart/{User.Id}");
     }
 
     // This function creates an order for a specific product and removes it from the cart.
