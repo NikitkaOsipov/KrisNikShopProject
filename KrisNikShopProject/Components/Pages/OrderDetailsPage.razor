@@ -40,10 +40,6 @@ else
     private UserModel user;
     protected override async Task OnInitializedAsync()
     {
-        // Task[] tasks = new Task[2];
-
-        // tasks[0] = Task.Run(() => order = OrderStorageService.GetOrder(int.Parse(Id)));
-        // tasks[1] = Task.Run(() => user = UserRegistrationService.GetUserEmail(UserEmail));
         await Task.Run(() => user = UserRegistrationService.GetUserById(int.Parse(UserId)));
         await Task.Run(() => order = OrderStorageService.GetOrder(int.Parse(OrderId), user));
     }

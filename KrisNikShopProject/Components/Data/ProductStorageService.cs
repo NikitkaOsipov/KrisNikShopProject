@@ -23,7 +23,8 @@
                     string[] parts = line.Split(',');
                     ProductModel product = new ProductModel(
                                                int.Parse(parts[0]), parts[1], parts[2], double.Parse(parts[3]), 
-                                               Enum.Parse<ProductCategories>(parts[4]), parts[5], parts[6], parts[7], parts[8], parts[9], TimeSpan.Parse(parts[10]));
+                                               Enum.Parse<ProductCategories>(parts[4]), parts[5], parts[6], parts[7], 
+                                               parts[8], parts[9], TimeSpan.Parse(parts[10]));
                     products.Add(product);
                 }
             }

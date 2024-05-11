@@ -62,11 +62,5 @@
             DateOfOrder = DateTime.Now;
             DateOfArrival = DateOfOrder.Add(TravelTime);
         }
-
-        public override string ToString()
-        {
-            return Id + "," + Name + "," + Description + "," + Price + "," + Image + "," + Quantity + "," + Category + "," + Brand + "," + Size + "," + Material;
-        }
-    
     }
 }

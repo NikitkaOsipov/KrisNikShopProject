@@ -9,7 +9,7 @@
 
 @if (ShowCardSubmitPage)
 {
-    <CardSubmitPage OnCancel="HideCardSubmitPage" Tcs="tcs" />
+    <CardSubmitPage OnCancel="HideCardSubmitPage" CardSubmissionCompletionSource="cardSubmissionCompletionSource" />
 }
 
 @if (cartItems == null)
@@ -78,7 +78,7 @@ else
 
     public bool ShowCardSubmitPage { get; set; } 
 
-    private TaskCompletionSource<bool>? tcs;
+    private TaskCompletionSource<bool> cardSubmissionCompletionSource;
 
     private List<ProductModel> cartItems;
     private Dictionary<int, int> quantitiesToRemove = new Dictionary<int, int>();
@@ -117,10 +117,10 @@ else
     {
         if(UserRegistrationService?.CurrentUser?.CardNumber == null) 
         {
-            tcs = new TaskCompletionSource<bool>();
+            cardSubmissionCompletionSource = new TaskCompletionSource<bool>();
             ShowCardSubmitPage = true;
             StateHasChanged();
-            await tcs.Task;
+            await cardSubmissionCompletionSource.Task; // waits for the task completion source to be completed
         } 
         OrderModel order = new OrderModel(product, UserRegistrationService!.CurrentUser!);
         OrderStorageService.AddOrder(order);
@@ -132,10 +132,10 @@ else
     {
         if(UserRegistrationService?.CurrentUser?.CardNumber == null) 
         {
-            tcs = new TaskCompletionSource<bool>();
+            cardSubmissionCompletionSource = new TaskCompletionSource<bool>();
             ShowCardSubmitPage = true;
             StateHasChanged();
-            await tcs.Task;
+            await cardSubmissionCompletionSource.Task;
         } 
 
         foreach (var item in cartItems)
@@ -152,10 +152,10 @@ else
     {
         if(UserRegistrationService?.CurrentUser?.CardNumber == null) 
         {
-            tcs = new TaskCompletionSource<bool>();
+            cardSubmissionCompletionSource = new TaskCompletionSource<bool>();
             ShowCardSubmitPage = true;
             StateHasChanged();
-            await tcs.Task;
+            await cardSubmissionCompletionSource.Task;
         } 
 
         foreach (var item in cartItems)
@@ -168,9 +168,9 @@ else
     private void HideCardSubmitPage(bool isCardSubmissionSuccessful = false)
     {
         ShowCardSubmitPage = false;
-        if (isCardSubmissionSuccessful && tcs != null && !tcs.Task.IsCompleted)
+        if (isCardSubmissionSuccessful && cardSubmissionCompletionSource != null && !cardSubmissionCompletionSource.Task.IsCompleted)
         {
-            tcs.SetResult(true);
+            cardSubmissionCompletionSource.SetResult(true);
         }
     }
 

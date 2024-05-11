@@ -31,26 +31,6 @@ namespace KrisNikShopProject.Components.Data
             DateOfCreating = DateTime.Now;
 		}
 
-		public UserModel(int id, string name, string password, string email, string role, DateTime dateOfCreating, string phoneNumber)
-        {
-            Id = id;
-            Name = name;
-            Password = password;
-            Email = email;
-            Role = role;
-            DateOfCreating = dateOfCreating;
-            PhoneNumber = (phoneNumber == "Unknown") ? null : phoneNumber;
-        }
-
-        public UserModel(int id, string name, string password, string email, string role)
-        {
-            Id = id;
-            Name = name;
-            Password = password;
-            Email = email;
-            Role = role;
-            DateOfCreating = DateTime.Now;
-        }
         public UserModel(int id, string name, string password, string email, string role, DateTime dateOfCreating, string phoneNumber, string cardNumber, string cardCVC2, string cardDate, string cardNameSurname)
         {
             Id = id;
@@ -67,7 +47,7 @@ namespace KrisNikShopProject.Components.Data
         }
         
 
-        public override string ToString() //kristian LOOOOOOHHHHH
+        public override string ToString()
         {
 			return  Id + "," + Name + "," + Password + "," + Email + "," + Role + "," + DateOfCreating.ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.CreateSpecificCulture("lv-LV")) + "," + (PhoneNumber?.Trim() ?? "Unknown") + "," + (CardNumber?.Trim() ?? "Unknown") + "," + (CardCVC2?.Trim() ?? "Unknown") + "," + (CardDate?.Trim() ?? "Unknown") + "," + (CardNameSurname?.Trim() ?? "Unknown");	
 		}

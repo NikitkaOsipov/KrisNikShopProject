@@ -24,7 +24,7 @@ namespace KrisNikShopProject.Components.Data
         {
             if (userRegistrationService.CurrentUser != null)
             {
-                string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService.CurrentUser.Id}_orders.txt");
+                string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService.CurrentUser.Id}_orders.json");
 
 
                 if (!File.Exists(fileName))
@@ -34,39 +34,42 @@ namespace KrisNikShopProject.Components.Data
                 }
                 else
                 {
-                    int? maxId = GetAllOrders().Max(order => order.Id);
+                    int? maxId = 0;
+
+                    foreach (OrderModel order in GetAllOrders())
+                    {
+                        if (order.Id >= maxId)
+                        {
+                            maxId = order.Id;
+                        }
+                    }
+
                     product.Id = maxId.GetValueOrDefault() + 1;
-                    
                 }
 
-                string info = JsonConvert.SerializeObject(product);
-                
-                using (var sw = new StreamWriter(fileName, true))
+                List<OrderModel> ordersToAdd = GetAllOrders() ?? new List<OrderModel>();
+
+                ordersToAdd.Add(product);
+
+                string ordersToWrite = JsonConvert.SerializeObject(ordersToAdd, Formatting.Indented);
+
+                using (var sw = new StreamWriter(fileName))
                 {
-                    sw.WriteLine(info);
+                    sw.WriteLine(ordersToWrite);
                 }
             }
         }
 
         public List<OrderModel> GetAllOrders()
         {
-            // Need to count the quantity of items that have the same id
-
+            string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService?.CurrentUser?.Id ?? 0}_orders.json");
+            
             List<OrderModel> orders = new List<OrderModel>();
-
-            string fileName = Path.Combine(FILE_PATH, $"{userRegistrationService?.CurrentUser?.Id ?? 0}_orders.txt");
 
             if (File.Exists(fileName))
             {
-                using (var reader = new StreamReader(fileName))
-                {
-                    string? line;
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        OrderModel? order = JsonConvert.DeserializeObject<OrderModel>(line);
-                        orders.Add(order!);
-                    }
-                }
+                string json = File.ReadAllText(fileName);
+                orders = JsonConvert.DeserializeObject<List<OrderModel>>(json);
             }
 
             return orders;
@@ -74,32 +77,34 @@ namespace KrisNikShopProject.Components.Data
 
         public List<OrderModel> GetAllOrders(UserModel user)
         {
-            // Need to count the quantity of items that have the same id
-
             List<OrderModel> orders = new List<OrderModel>();
 
-            string fileName = Path.Combine(FILE_PATH, $"{user.Id}_orders.txt");
+            string fileName = Path.Combine(FILE_PATH, $"{user.Id}_orders.json");
 
             if (File.Exists(fileName))
             {
-                using (var reader = new StreamReader(fileName))
-                {
-                    string? line;
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        OrderModel? order = JsonConvert.DeserializeObject<OrderModel>(line);
-                        orders.Add(order!);
-                    }
-                }
+                string json = File.ReadAllText(fileName);
+                orders = JsonConvert.DeserializeObject<List<OrderModel>>(json);
             }
-
+            
             return orders;
         }
 
         public OrderModel? GetOrder(int? ID, UserModel user)
         {
             List<OrderModel> orders = GetAllOrders(user);
-            return orders.FirstOrDefault(order => order.Id == ID);
+
+            OrderModel orderToReturn = new OrderModel();
+
+            foreach (OrderModel order in orders)
+            {
+                if (order.Id == ID)
+                {
+                    orderToReturn = order;
+                }
+            }
+
+            return orderToReturn;
         }
 
         public void DeleteOrder(UserModel user)

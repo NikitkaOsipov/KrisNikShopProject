@@ -29,7 +29,7 @@ namespace KrisNikShopProject.Components.Data
         // This function registers a new user.
         public void RegisterUser(UserModel user)
         {
-            UserModel? rightUser = GetUserEmail(user.Email!);
+            UserModel? rightUser = GetUserByEmail(user.Email!);
             if(rightUser == null) //checks if the user email is unique 
             {
                 int? maxId = GetAllUsers().Max(user => user.Id);
@@ -41,16 +41,24 @@ namespace KrisNikShopProject.Components.Data
                 }
                 CurrentUser = user;
             }
+            else
+            {
+                SignInUser(user);
+            }
         }
 
         // This function signs in a user.
-        public void SignInUser(UserModel user)
+        public bool SignInUser(UserModel user)
         {
-            UserModel? rightUser = GetUserEmail(user.Email!);
+            UserModel? rightUser = GetUserByEmail(user.Email!);
+
             if(rightUser != null && rightUser?.Password == user.Password) 
             { 
                 CurrentUser = rightUser;
+                return true;
             }
+
+            return false;
         }
 
         // This function gets all registered users.
@@ -73,7 +81,7 @@ namespace KrisNikShopProject.Components.Data
         }
 
         // This function gets a user by their email.
-        public UserModel? GetUserEmail(string email)
+        public UserModel? GetUserByEmail(string email)
         {   
             UserModel? resultUser = null;
             List<UserModel> users = GetAllUsers();
@@ -132,7 +140,14 @@ namespace KrisNikShopProject.Components.Data
         {
             List<UserModel> users = GetAllUsers();
 
-            users.RemoveAll(user => user.Email == userToDelete.Email);
+            foreach (UserModel user in users)
+            {
+                if (user.Id == userToDelete.Id)
+                {
+                    users.Remove(user);
+                    break;
+                }
+            }
 
             using (StreamWriter sw = new StreamWriter(FILE_NAME)) // rewrite all users
             {
@@ -147,14 +162,6 @@ namespace KrisNikShopProject.Components.Data
                 CurrentUser = null;
             }
         }
-
-
-        // This function gets a string representation of the current user.
-        public string GetCurrentUserString()
-        {
-            string result = (CurrentUser?.Name ?? "Guest") + " " + (CurrentUser?.Email ?? "unknownEmail") + "!!!!";
-			return result;
-		}
 
         // This function signs out the current user.
         public void SignOutUser() => CurrentUser = null;

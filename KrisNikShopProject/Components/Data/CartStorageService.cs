@@ -17,7 +17,6 @@
             //which can then be used throughout the CartStorageService class.
         }
 
-        // This function adds a product to the cart of the current user.
         public void AddProduct(ProductModel product, int count = 1)
         {
             if (userRegistrationService.CurrentUser != null)
@@ -30,38 +29,46 @@
                 }
 
                 ProductModel[]? existingProducts = GetAllProducts().ToArray();
-                    if(existingProducts.FirstOrDefault(p => p.Id == product.Id) != null)
+
+                int productId = 0;
+
+                for (int i = 0; i < existingProducts.Length; i++)
+                {
+                    if (existingProducts[i].Id == product.Id)
                     {
-                        using (var sw = new StreamWriter(fileName))
+                        productId = i;
+                    }
+                }
+
+                if(productId != 0)
+                {
+                    using (var sw = new StreamWriter(fileName))
+                    {
+                        existingProducts[productId].Quantity += count;
+                        foreach (ProductModel? p in existingProducts)
                         {
-                            existingProducts.FirstOrDefault(p => p.Id == product.Id).Quantity += count;
-                            foreach (ProductModel? p in existingProducts)
-                            {
-                                sw.WriteLine($"{p.Id},{p.Quantity}");
-                            }
+                            sw.WriteLine($"{p.Id},{p.Quantity}");
                         }
                     }
-                    else
+                }
+                else
+                {
+                    using (var sw = new StreamWriter(fileName, true))
                     {
-                        using (var sw = new StreamWriter(fileName, true))
-                        {
-                            sw.WriteLine($"{product.Id},{count}");
-                        }
+                        sw.WriteLine($"{product.Id},{count}");
                     }
+                }
             }
         }
 
         // This function deletes the cart of a user with a given ID.
-        public void DeleteCart(int? ID)
+        public void DeleteCart(UserModel user)
         {
-            if (userRegistrationService.CurrentUser != null)
-            {
-                string fileName = Path.Combine(FILE_PATH, $"{ID}_cart.json");
+            string fileName = Path.Combine(FILE_PATH, $"{user.Id}_cart.csv");
 
-                if (File.Exists(fileName))
-                {
-                    File.Delete(fileName);
-                }
+            if (File.Exists(fileName))
+            {
+                File.Delete(fileName);
             }
         }
 
@@ -72,12 +79,21 @@
             {
                 string fileName = Path.Combine(FILE_PATH, $"{user.Id}_cart.csv");
 
-                List<ProductModel>? cartProducts = GetAllProducts(user);
-                
+                List<ProductModel> cartProducts = GetAllProducts(user);
 
-                if(cartProducts.FirstOrDefault(p => p.Id == product.Id) != null)
+                int productId = -1;
+
+                for (int i = 0; i < cartProducts.Count; i++)
                 {
-                    ProductModel? productToChange = cartProducts.FirstOrDefault(p => p.Id == product.Id);
+                    if (cartProducts[i].Id == product.Id)
+                    {
+                        productId = i;
+                    }
+                }
+
+                if (productId != -1)
+                {
+                    ProductModel productToChange = cartProducts[productId];
                     productToChange.Quantity -= count;
 
                     if (productToChange.Quantity <= 0) 

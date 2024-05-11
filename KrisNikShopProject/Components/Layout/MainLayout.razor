@@ -30,26 +30,3 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
-
-@* @code {
-    protected override void OnInitialized()
-    {
-        userRegistrationService.OnCurrentUserChanged += HandleCurrentUserChanged;
-    }
-
-    private void HandleCurrentUserChanged()
-    {
-        InvokeAsync(StateHasChanged); //https://www.youtube.com/watch?v=JoSwm6HAYgM&ab_channel=TutorialsTeam
-    //     InvokeAsync(() =>
-    // {
-    //     StateHasChanged();
-    //     NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
-    //});
-    }
-
-    public void Dispose()
-    {
-        userRegistrationService.OnCurrentUserChanged -= HandleCurrentUserChanged;
-    }
-}
- *@

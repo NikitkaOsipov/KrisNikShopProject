@@ -64,7 +64,7 @@
     public EventCallback<bool> OnCancel { get; set; }
 
     [Parameter]
-    public TaskCompletionSource<bool> Tcs { get; set; }
+    public TaskCompletionSource<bool> CardSubmissionCompletionSource { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -93,9 +93,9 @@
         userRegistrationService.ChangeUserData(userToChange);
         OnCancel.InvokeAsync(true);
 
-        if (Tcs != null && !Tcs.Task.IsCompleted)
+        if (CardSubmissionCompletionSource != null && !CardSubmissionCompletionSource.Task.IsCompleted)
         {
-            Tcs.SetResult(true);
+            CardSubmissionCompletionSource.SetResult(true);
         }
     }
 }

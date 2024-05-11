@@ -39,21 +39,20 @@
 
     protected override void OnParametersSet()
     {
-        UserToChange = userRegistrationService.GetUserEmail(UserEmail);
+        UserToChange = userRegistrationService.GetUserByEmail(UserEmail);
     }
 
     private void HandleValidSubmit()
     {
         userRegistrationService.ChangeUserData(UserToChange!);
         NavigationManager.NavigateTo("/");
-        // Handle the form submission here. For example, you might call a method on the userRegistrationService to save the changes.
     }
 
     private void HandleDelete()
     {
-        CartStorageService.DeleteCart(UserToChange?.Id);
+        CartStorageService.DeleteCart(UserToChange!);
         userRegistrationService.DeleteUser(UserToChange!);
-        OrderStorageService.DeleteOrder(UserToChange);
+        OrderStorageService.DeleteOrder(UserToChange!);
         NavigationManager.NavigateTo("/");
     }
 
