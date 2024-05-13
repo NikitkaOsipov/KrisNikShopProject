@@ -20,3 +20,6 @@ Projekta struktūra:
 - Mapē "KrisNikShopProject\Components\Data" ir visi C# faili, modeļi un pakalpojumi
 - Mapē "KrisNikShopProject\Components\Layout" ir visi komponenti, kas saistīti ar vietnes augšējo un kreiso paneli
 - Mapē "KrisNikShopProject\Components\Pages" ir Razor faili, kas saistīti tieši ar vietnes lapām
+
+Papildus:
+Lai piekļūtu Moderatora lapai, jums jāreģistrējas kā lietotājam: Email: Osipog@rvt.lv, Parole: !Osipog123. Pēc reģistrācijas poga parādīsies vietnes kreisajā panelī.
